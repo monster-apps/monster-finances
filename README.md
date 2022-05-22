@@ -1,4 +1,4 @@
-# monster_finances
+# Monster Finances
 
 A new Flutter project.
 
