@@ -28,6 +28,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   vrouter: ^1.2.0
+  grouped_list: ^5.0.1
   flutter:
     sdk: flutter
 

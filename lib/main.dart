@@ -32,13 +32,14 @@ class MonsterApp extends StatelessWidget {
             useMaterial3: true),
         routes: [
           VWidget(path: '/overview', widget: const OverviewPage()),
-          VWidget(path: '/accounts/new', widget: const AccountInfoPage()),
           VWidget(
-              path: '/accounts/:account_id', widget: const AccountInfoPage()),
+              path: '/accounts/:account_id',
+              aliases: const ['/accounts/new'],
+              widget: const AccountInfoPage()),
           VWidget(
               path: '/accounts/:account_id/transactions',
+              aliases: const ['/transactions/new'],
               widget: const AccountTransactionsPage()),
-          VWidget(path: '/transactions/new', widget: const TransactionPage()),
           VWidget(
               path: '/transactions/:transaction_id',
               widget: const TransactionPage()),
