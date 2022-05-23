@@ -84,7 +84,7 @@ class OverviewPage extends StatelessWidget {
                   children: [
                     Text(element['type']),
                     const Spacer(),
-                    const Text('+ 1215.49')
+                    const Text('+ 1215.49'),
                   ],
                 ),
               ),
