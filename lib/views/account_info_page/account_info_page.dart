@@ -6,7 +6,7 @@ class AccountInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Future<String> foo = Future<String>.delayed(
-      const Duration(seconds: 2),
+      const Duration(seconds: 1),
       () => 'Account Info Page',
     );
 
@@ -15,9 +15,13 @@ class AccountInfoPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-              body: Center(
-            child: Text('Page: ${snapshot.data}'),
-          ));
+            appBar: AppBar(
+              title: const Text('Accounts'),
+            ),
+            body: Center(
+              child: Text('Page: ${snapshot.data}'),
+            ),
+          );
         }
         return const Center(
           child: CircularProgressIndicator(),
