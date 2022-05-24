@@ -15,9 +15,13 @@ class TransactionPage extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-              body: Center(
-            child: Text('Page: ${snapshot.data}'),
-          ));
+            appBar: AppBar(
+              title: const Text('Transaction'),
+            ),
+            body: Center(
+              child: Text('Page: ${snapshot.data}'),
+            ),
+          );
         }
         return const Center(
           child: CircularProgressIndicator(),
