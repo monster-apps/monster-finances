@@ -17,12 +17,22 @@ class OverviewPage extends StatelessWidget {
     );
 
     buildWithBody(Widget body) {
+      double amountTotal = getTotalValue();
+
       return Scaffold(
         appBar: AppBar(
           centerTitle: false,
           title: const Text('Overview'),
         ),
         body: body,
+        bottomNavigationBar: BottomAppBar(
+          child: ListTile(
+            leading: const Icon(Icons.house_outlined),
+            title: const Text('Total'),
+            trailing: Text('${amountTotal >= 0 ? '+' : '-'} $amountTotal'),
+            contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          ),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             VRouter.of(context).to('/accounts/new');

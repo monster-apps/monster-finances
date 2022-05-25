@@ -26,3 +26,11 @@ double getTotalValueByAccount(int accountId) {
       .property(Transaction_.value)
       .sum();
 }
+
+double getTotalValue() {
+  return storeBox.transactions
+      .query()
+      .build()
+      .property(Transaction_.value)
+      .sum();
+}
