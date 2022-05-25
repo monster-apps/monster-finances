@@ -44,6 +44,10 @@ class InitialData {
     Box<AccountResponsible> accountResponsible,
     Box<Transaction> transactions,
   ) async {
+    // accounts.removeAll();
+    // accountResponsible.removeAll();
+    // transactions.removeAll();
+
     bool accountsCreated = await _createManyIfEmpty(
       store,
       devAccounts,
@@ -65,14 +69,21 @@ class InitialData {
     // create relations
     // create account-responsible relations
     if (responsibleCreated) {
-      AccountResponsible? responsible = accountResponsible.get(0);
-      responsible?.accounts.addAll(accounts.getAll());
+      List<AccountResponsible> responsibleList = accountResponsible.getAll();
+      responsibleList.first.accounts.addAll(accounts.getAll());
     }
 
-    // create account-transactions relation
+    // create account-transactions relations
     if (accountsCreated) {
-      Account? account = accounts.get(0);
-      account?.transactions.addAll(transactions.getAll());
+      List<Account> accountList = accounts.getAll();
+      Account account = accountList.first;
+      account.transactions.addAll(transactions.getAll());
+
+      // create account-type relations
+      account.type.target = store.box<AccountType>().get(1);
+      account.operatingCurrency.target = store.box<Currency>().get(1);
+
+      accounts.put(account);
     }
   }
 
