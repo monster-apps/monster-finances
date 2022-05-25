@@ -6,51 +6,6 @@ import 'package:vrouter/vrouter.dart';
 
 import '../../main.dart';
 
-List _elements = [
-  {
-    'name': 'Bank A',
-    'description': '',
-    'type': 'Account',
-    'responsible': 'Luan',
-    'operating_currency': 'BRL',
-  },
-  {
-    'name': 'Bank B',
-    'description': 'Chequing account',
-    'type': 'Account',
-    'responsible': 'Luan',
-    'operating_currency': 'CAD',
-  },
-  {
-    'name': 'Bank B',
-    'description': 'Savings account',
-    'type': 'Account',
-    'responsible': 'Luan',
-    'operating_currency': 'CAD',
-  },
-  {
-    'name': 'Exchange A',
-    'description': '',
-    'type': 'Investment',
-    'responsible': 'Luan',
-    'operating_currency': 'CAD',
-  },
-  {
-    'name': 'Brokerage A',
-    'description': '',
-    'type': 'Investment',
-    'responsible': 'Luan',
-    'operating_currency': 'CAD',
-  },
-  {
-    'name': 'Metamask',
-    'description': 'Account 1',
-    'type': 'Investment',
-    'responsible': 'Luan',
-    'operating_currency': '',
-  },
-];
-
 class OverviewPage extends StatelessWidget {
   const OverviewPage({Key? key}) : super(key: key);
 
