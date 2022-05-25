@@ -158,7 +158,7 @@
     },
     {
       "id": "7:910366861943461535",
-      "lastPropertyId": "9:230813915214697454",
+      "lastPropertyId": "10:5935338641769780368",
       "name": "Transaction",
       "properties": [
         {
@@ -215,6 +215,14 @@
           "flags": 520,
           "indexId": "6:133319262498614027",
           "relationTarget": "Tag"
+        },
+        {
+          "id": "10:5935338641769780368",
+          "name": "accountId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:7351957265350702927",
+          "relationTarget": "Account"
         }
       ],
       "relations": [
@@ -227,7 +235,7 @@
     }
   ],
   "lastEntityId": "7:910366861943461535",
-  "lastIndexId": "6:133319262498614027",
+  "lastIndexId": "7:7351957265350702927",
   "lastRelationId": "1:9170771443455685097",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

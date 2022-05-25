@@ -34,6 +34,13 @@ class MonsterStore {
       categories,
       currencies,
     );
+
+    InitialData().createDevelopmentData(
+      store,
+      accounts,
+      accountResponsible,
+      transactions,
+    );
   }
 
   /// Create an instance of ObjectBox to use throughout the app.

@@ -1,3 +1,4 @@
+import 'package:monster_finances/entities/account.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'account_responsible.dart';
@@ -15,6 +16,7 @@ class Transaction {
 
   String? notes;
 
+  final account = ToOne<Account>();
   final category = ToOne<Category>();
   final responsible = ToOne<AccountResponsible>();
   final currency = ToOne<Tag>();
