@@ -39,21 +39,34 @@ class MonsterApp extends StatelessWidget {
             // is not restarted.
             primarySwatch: Colors.blue,
             useMaterial3: true),
+        initialUrl: "/overview",
         routes: [
-          VWidget(path: '/overview', widget: const OverviewPage()),
           VWidget(
-              path: '/accounts/:account_id',
-              aliases: const ['/accounts/new'],
-              widget: const AccountInfoPage()),
+            path: '/overview',
+            widget: const OverviewPage(),
+            stackedRoutes: [
+              VWidget(
+                path: '/accounts/:account_id',
+                aliases: const ['/accounts/new'],
+                widget: const AccountInfoPage(),
+              ),
+              VWidget(
+                  path: '/accounts/:account_id/transactions',
+                  widget: const AccountTransactionsPage(),
+                  stackedRoutes: [
+                    VWidget(
+                      path:
+                          '/accounts/:account_id/transactions/:transaction_id',
+                      aliases: const ['/accounts/:account_id/transactions/new'],
+                      widget: const TransactionPage(),
+                    ),
+                  ]),
+            ],
+          ),
           VWidget(
-              path: '/accounts/:account_id/transactions',
-              aliases: const ['/transactions/new'],
-              widget: const AccountTransactionsPage()),
-          VWidget(
-              path: '/transactions/:transaction_id',
-              widget: const TransactionPage()),
-          VWidget(path: '/404', widget: const NotFoundPage()),
-          VRouteRedirector(path: '/', redirectTo: '/overview'),
+            path: '/404',
+            widget: const NotFoundPage(),
+          ),
           VRouteRedirector(path: ':_(.+)', redirectTo: '/404'),
         ]);
   }

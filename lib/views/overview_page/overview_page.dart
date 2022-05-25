@@ -63,7 +63,13 @@ class OverviewPage extends StatelessWidget {
             centerTitle: false,
             title: const Text('Overview'),
           ),
-          body: body);
+          body: body,
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              VRouter.of(context).to('/accounts/new');
+            },
+            child: const Icon(Icons.add),
+      ),);
     }
 
     mainBody() {
@@ -98,7 +104,7 @@ class OverviewPage extends StatelessWidget {
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
                     context.vRouter
-                        .toSegments(['/accounts/', '1', 'transactions']);
+                        .toSegments(['accounts', '1', 'transactions']);
                   },
                 );
               },
