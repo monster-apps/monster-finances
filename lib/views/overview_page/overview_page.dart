@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:monster_finances/entities/account.dart';
-import 'package:monster_finances/objectbox.g.dart';
+import 'package:monster_finances/queries/accounts.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../main.dart';
@@ -44,32 +44,33 @@ class OverviewPage extends StatelessWidget {
               scrollDirection: Axis.vertical,
               // itemExtent: 40.0,
               separator: const Divider(),
-              groupHeaderBuilder: (element) => Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
-                child: Row(
-                  children: [
-                    Text(element.type.target != null
-                        ? element.type.target!.name
-                        : ''),
-                    const Spacer(),
-                    const Text('+ 1215.49'),
-                  ],
-                ),
-              ),
+              groupHeaderBuilder: (element) {
+                double amountInAccountType =
+                    getTotalValueByAccountType(element.type.targetId);
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 16.0, horizontal: 8.0),
+                  child: Row(
+                    children: [
+                      Text(element.type.target != null
+                          ? element.type.target!.name
+                          : ''),
+                      const Spacer(),
+                      Text(
+                          '${amountInAccountType >= 0 ? '+' : '-'} $amountInAccountType'),
+                    ],
+                  ),
+                );
+              },
               itemBuilder: (context, element) {
-                double amountInAccount = storeBox.transactions
-                    .query(Transaction_.account.equals(element.id))
-                    .build()
-                    .property(Transaction_.value)
-                    .sum();
+                double amountInAccount = getTotalValueByAccount(element.id);
                 return ListTile(
                   leading: const Icon(Icons.house_outlined),
                   title: Text(element.name),
                   subtitle: Text(
                       element.description != null ? element.description! : ''),
                   trailing: Text(
-                      '${amountInAccount > 0 ? '+' : '-'} $amountInAccount'),
+                      '${amountInAccount >= 0 ? '+' : '-'} $amountInAccount'),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {

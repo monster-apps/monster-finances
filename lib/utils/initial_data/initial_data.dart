@@ -60,30 +60,41 @@ class InitialData {
       accountResponsible,
     );
 
-    _createManyIfEmpty(
+    bool transactionsCreated = await _createManyIfEmpty(
       store,
       devTransactions,
       transactions,
     );
 
     // create relations
-    // create account-responsible relations
-    if (responsibleCreated) {
-      List<AccountResponsible> responsibleList = accountResponsible.getAll();
-      responsibleList.first.accounts.addAll(accounts.getAll());
+    List<Account> accountList = accounts.getAll();
+    if (accountsCreated) {
+      for (var account in accountList) {
+        Query<AccountType> accountTypeQuery =
+            store.box<AccountType>().query().build();
+        AccountType? accountType = accountTypeQuery.findFirst();
+        accountTypeQuery.close();
+        account.type.target = accountType!;
+
+        Query<Currency> currencyQuery = store.box<Currency>().query().build();
+        Currency? currency = currencyQuery.findFirst();
+        currencyQuery.close();
+        account.operatingCurrency.target = currency!;
+
+        store.box<Account>().put(account);
+      }
     }
 
-    // create account-transactions relations
-    if (accountsCreated) {
-      List<Account> accountList = accounts.getAll();
-      Account account = accountList.first;
-      account.transactions.addAll(transactions.getAll());
-
-      // create account-type relations
-      account.type.target = store.box<AccountType>().get(1);
-      account.operatingCurrency.target = store.box<Currency>().get(1);
-
-      accounts.put(account);
+    if (transactionsCreated) {
+      List<Transaction> transactionsList = transactions.getAll();
+      List<AccountResponsible> responsibleList = accountResponsible.getAll();
+      AccountResponsible firstResponsible = responsibleList.first;
+      Account firstAccount = accountList.first;
+      for (var transaction in transactionsList) {
+        transaction.account.target = firstAccount;
+        transaction.responsible.target = firstResponsible;
+        store.box<Transaction>().put(transaction);
+      }
     }
   }
 
