@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:monster_finances/entities/account.dart';
 import 'package:monster_finances/queries/accounts.dart';
+import 'package:monster_finances/utils/text_util.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../main.dart';
@@ -27,9 +28,8 @@ class AccountsPage extends StatelessWidget {
         body: body,
         bottomNavigationBar: BottomAppBar(
           child: ListTile(
-            leading: const Icon(Icons.house_outlined),
             title: const Text('Total'),
-            trailing: Text('${amountTotal >= 0 ? '+' : '-'} $amountTotal'),
+            trailing: Text(TextUtil().getFormattedAmount(amountTotal)),
             contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0),
           ),
         ),
@@ -66,8 +66,7 @@ class AccountsPage extends StatelessWidget {
                           ? element.type.target!.name
                           : ''),
                       const Spacer(),
-                      Text(
-                          '${amountInAccountType >= 0 ? '+' : '-'} $amountInAccountType'),
+                      Text(TextUtil().getFormattedAmount(amountInAccountType)),
                     ],
                   ),
                 );
@@ -75,12 +74,11 @@ class AccountsPage extends StatelessWidget {
               itemBuilder: (context, element) {
                 double amountInAccount = getTotalValueByAccount(element.id);
                 return ListTile(
-                  leading: const Icon(Icons.house_outlined),
                   title: Text(element.name),
                   subtitle: Text(
                       element.description != null ? element.description! : ''),
-                  trailing: Text(
-                      '${amountInAccount >= 0 ? '+' : '-'} $amountInAccount'),
+                  trailing:
+                      Text(TextUtil().getFormattedAmount(amountInAccount)),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
