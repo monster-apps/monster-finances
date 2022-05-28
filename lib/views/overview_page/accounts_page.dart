@@ -59,7 +59,7 @@ class AccountsPage extends HookConsumerWidget {
               // itemExtent: 40.0,
               separator: const Divider(),
               groupHeaderBuilder: (element) {
-                final mountByAccountType = ref.watch(
+                final amountByAccountType = ref.watch(
                     totalAmountByAccountTypeProvider(element.type.targetId));
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -68,7 +68,7 @@ class AccountsPage extends HookConsumerWidget {
                     children: [
                       Text(element.type.target?.name ?? ''),
                       const Spacer(),
-                      Text(TextUtil().getFormattedAmount(mountByAccountType)),
+                      Text(TextUtil().getFormattedAmount(amountByAccountType)),
                     ],
                   ),
                 );
