@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/entities/account.dart';
+import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_type_provider.dart';
 import 'package:monster_finances/providers/total_amount_provider.dart';
+import 'package:monster_finances/queries/accounts.dart';
+import 'package:monster_finances/utils/select_account_util.dart';
 import 'package:monster_finances/utils/text_util.dart';
 import 'package:vrouter/vrouter.dart';
-
-import '../../main.dart';
 
 class AccountsPage extends HookConsumerWidget {
   const AccountsPage({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class AccountsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totalAmount = ref.watch(totalAmountProvider);
+    final int currentAccountId = ref.watch(currentAccountProvider);
 
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
@@ -50,9 +52,8 @@ class AccountsPage extends HookConsumerWidget {
         child: Row(children: [
           Expanded(
             child: GroupedListView<Account, String>(
-              elements: storeBox.accounts.getAll(),
-              groupBy: (element) =>
-                  element.type.target != null ? element.type.target!.name : '',
+              elements: AccountQuery().getAllAccounts(),
+              groupBy: (element) => element.type.target?.name ?? '',
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               // itemExtent: 40.0,
@@ -65,9 +66,7 @@ class AccountsPage extends HookConsumerWidget {
                       vertical: 16.0, horizontal: 8.0),
                   child: Row(
                     children: [
-                      Text(element.type.target != null
-                          ? element.type.target!.name
-                          : ''),
+                      Text(element.type.target?.name ?? ''),
                       const Spacer(),
                       Text(TextUtil().getFormattedAmount(mountByAccountType)),
                     ],
@@ -79,15 +78,14 @@ class AccountsPage extends HookConsumerWidget {
                     ref.watch(totalAmountByAccountProvider(element.id));
                 return ListTile(
                   title: Text(element.name),
-                  subtitle: Text(
-                      element.description != null ? element.description! : ''),
+                  subtitle: Text(element.description ?? ''),
+                  selected: currentAccountId == element.id,
                   trailing:
                       Text(TextUtil().getFormattedAmount(amountByAccount)),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
-                    context.vRouter.toSegments(
-                        ['accounts', element.id.toString(), 'transactions']);
+                    SelectAccountUtil().select(context, ref, element.id);
                   },
                 );
               },
