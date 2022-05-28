@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/entities/account.dart';
-import 'package:monster_finances/queries/accounts.dart';
+import 'package:monster_finances/providers/total_amount_by_account_provider.dart';
+import 'package:monster_finances/providers/total_amount_by_account_type_provider.dart';
+import 'package:monster_finances/providers/total_amount_provider.dart';
 import 'package:monster_finances/utils/text_util.dart';
 import 'package:vrouter/vrouter.dart';
 
 import '../../main.dart';
 
-class AccountsPage extends StatelessWidget {
+class AccountsPage extends HookConsumerWidget {
   const AccountsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final totalAmount = ref.watch(totalAmountProvider);
+
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
       () => 'Overview Page',
     );
 
     buildWithBody(Widget body) {
-      double amountTotal = getTotalValue();
-
       return Scaffold(
         appBar: AppBar(
           centerTitle: false,
@@ -29,7 +32,7 @@ class AccountsPage extends StatelessWidget {
         bottomNavigationBar: BottomAppBar(
           child: ListTile(
             title: const Text('Total'),
-            trailing: Text(TextUtil().getFormattedAmount(amountTotal)),
+            trailing: Text(TextUtil().getFormattedAmount(totalAmount)),
             contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0),
           ),
         ),
@@ -55,8 +58,8 @@ class AccountsPage extends StatelessWidget {
               // itemExtent: 40.0,
               separator: const Divider(),
               groupHeaderBuilder: (element) {
-                double amountInAccountType =
-                    getTotalValueByAccountType(element.type.targetId);
+                final mountByAccountType = ref.watch(
+                    totalAmountByAccountTypeProvider(element.type.targetId));
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 16.0, horizontal: 8.0),
@@ -66,19 +69,20 @@ class AccountsPage extends StatelessWidget {
                           ? element.type.target!.name
                           : ''),
                       const Spacer(),
-                      Text(TextUtil().getFormattedAmount(amountInAccountType)),
+                      Text(TextUtil().getFormattedAmount(mountByAccountType)),
                     ],
                   ),
                 );
               },
               itemBuilder: (context, element) {
-                double amountInAccount = getTotalValueByAccount(element.id);
+                final amountByAccount =
+                    ref.watch(totalAmountByAccountProvider(element.id));
                 return ListTile(
                   title: Text(element.name),
                   subtitle: Text(
                       element.description != null ? element.description! : ''),
                   trailing:
-                      Text(TextUtil().getFormattedAmount(amountInAccount)),
+                      Text(TextUtil().getFormattedAmount(amountByAccount)),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
