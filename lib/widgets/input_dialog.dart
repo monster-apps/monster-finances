@@ -2,10 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:vrouter/vrouter.dart';
 
 class WidgetInputDialog extends StatefulWidget {
-  const WidgetInputDialog({Key? key}) : super(key: key);
+  const WidgetInputDialog({
+    Key? key,
+    required this.label,
+    required this.title,
+    required this.value,
+  }) : super(key: key);
 
   @override
   State<WidgetInputDialog> createState() => _WidgetInputDialogState();
+
+  final String label;
+  final String title;
+  final String value;
 }
 
 class _WidgetInputDialogState extends State<WidgetInputDialog> {
@@ -14,43 +23,46 @@ class _WidgetInputDialogState extends State<WidgetInputDialog> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const CircleAvatar(child: Text('N')),
-      title: const Text('Add account'),
-      subtitle: const Text('Bank of Montreal'),
+      leading: CircleAvatar(child: Text(widget.label[0].toUpperCase())),
+      title: Text('Add ${widget.title}'),
+      subtitle: Text(widget.value),
       onTap: () {
         showDialog(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-                  title: const Text("Title"),
-                  content: Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Enter the account name',
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                    ),
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Add ${widget.title}'),
+              content: Form(
+                key: _formKey,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Enter the ${widget.label}',
                   ),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => context.vRouter.pop(),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          context.vRouter.pop();
-                        }
-                      },
-                      child: const Text('OK'),
-                    ),
-                  ],
-                ));
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some value';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => context.vRouter.pop(),
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context.vRouter.pop();
+                    }
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }
