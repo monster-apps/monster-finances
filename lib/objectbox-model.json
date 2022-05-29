@@ -1,0 +1,248 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1769497793055656167",
+      "lastPropertyId": "6:7916538139024947053",
+      "name": "Account",
+      "properties": [
+        {
+          "id": "1:5524004754406174505",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5307479272448330135",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:5873687526645889811",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:5588848272160889268",
+          "name": "typeId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:8061641244775223310",
+          "relationTarget": "AccountType"
+        },
+        {
+          "id": "5:1537096795342838274",
+          "name": "responsibleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:8178785459679785756",
+          "relationTarget": "AccountResponsible"
+        },
+        {
+          "id": "6:7916538139024947053",
+          "name": "operatingCurrencyId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "3:8499500121561902294",
+          "relationTarget": "Currency"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:5861477904241396225",
+      "lastPropertyId": "2:1907873328243456855",
+      "name": "AccountResponsible",
+      "properties": [
+        {
+          "id": "1:6810970701568691494",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1907873328243456855",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:4352723603061487811",
+      "lastPropertyId": "2:7495958144765106803",
+      "name": "AccountType",
+      "properties": [
+        {
+          "id": "1:1926206007598857130",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7495958144765106803",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:4998185146954878506",
+      "lastPropertyId": "2:7040559672929470445",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:6572155989969057668",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:7040559672929470445",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:6017656818201636995",
+      "lastPropertyId": "4:2340445556690041187",
+      "name": "Currency",
+      "properties": [
+        {
+          "id": "1:6829534836591167321",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2565068967677238216",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:3356291712489373657",
+          "name": "code",
+          "type": 9
+        },
+        {
+          "id": "4:2340445556690041187",
+          "name": "symbol",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:6266494336799025711",
+      "lastPropertyId": "2:2726678883347526373",
+      "name": "Tag",
+      "properties": [
+        {
+          "id": "1:1356069802519414077",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2726678883347526373",
+          "name": "value",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "7:910366861943461535",
+      "lastPropertyId": "10:5935338641769780368",
+      "name": "Transaction",
+      "properties": [
+        {
+          "id": "1:713927344614518515",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4888522614585746573",
+          "name": "value",
+          "type": 8
+        },
+        {
+          "id": "3:6384075061377229075",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:1679943011642458224",
+          "name": "date",
+          "type": 10
+        },
+        {
+          "id": "5:9113212834311093046",
+          "name": "notes",
+          "type": 9
+        },
+        {
+          "id": "6:2878097954570964543",
+          "name": "isPositiveValue",
+          "type": 1
+        },
+        {
+          "id": "7:178032246493438306",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "4:445782128098827780",
+          "relationTarget": "Category"
+        },
+        {
+          "id": "8:4039426126378031284",
+          "name": "responsibleId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "5:7426324067287643955",
+          "relationTarget": "AccountResponsible"
+        },
+        {
+          "id": "9:230813915214697454",
+          "name": "currencyId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "6:133319262498614027",
+          "relationTarget": "Tag"
+        },
+        {
+          "id": "10:5935338641769780368",
+          "name": "accountId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "7:7351957265350702927",
+          "relationTarget": "Account"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:9170771443455685097",
+          "name": "tags",
+          "targetId": "6:6266494336799025711"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "7:910366861943461535",
+  "lastIndexId": "7:7351957265350702927",
+  "lastRelationId": "1:9170771443455685097",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

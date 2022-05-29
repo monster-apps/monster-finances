@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/store/store.dart';
 import 'package:monster_finances/views/account_info_page/account_info_page.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
 import 'package:monster_finances/views/not_found.dart';
@@ -6,8 +8,20 @@ import 'package:monster_finances/views/overview_page/overview_page.dart';
 import 'package:monster_finances/views/transaction_page/transaction_page.dart';
 import 'package:vrouter/vrouter.dart';
 
-void main() {
-  runApp(const MonsterApp());
+late MonsterStore storeBox;
+
+Future<void> main() async {
+  // This is required so ObjectBox can get the application directory
+  // to store the database in.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  storeBox = await MonsterStore.create();
+
+  runApp(
+    const ProviderScope(
+      child: MonsterApp(),
+    ),
+  );
 }
 
 class MonsterApp extends StatelessWidget {
