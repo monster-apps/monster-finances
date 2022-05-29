@@ -54,7 +54,7 @@ class InitialData {
       accounts,
     );
 
-    bool responsibleCreated = await _createManyIfEmpty(
+    await _createManyIfEmpty(
       store,
       devAccountResponsible,
       accountResponsible,

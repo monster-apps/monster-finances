@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/store/store.dart';
 import 'package:monster_finances/views/account_info_page/account_info_page.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
@@ -16,7 +17,11 @@ Future<void> main() async {
 
   storeBox = await MonsterStore.create();
 
-  runApp(const MonsterApp());
+  runApp(
+    const ProviderScope(
+      child: MonsterApp(),
+    ),
+  );
 }
 
 class MonsterApp extends StatelessWidget {
