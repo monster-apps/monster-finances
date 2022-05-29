@@ -1,108 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:grouped_list/grouped_list.dart';
-import 'package:monster_finances/entities/account.dart';
-import 'package:monster_finances/queries/accounts.dart';
-import 'package:vrouter/vrouter.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/providers/current_account_provider.dart';
+import 'package:monster_finances/utils/screen_util.dart';
+import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
+import 'package:monster_finances/views/overview_page/accounts_page.dart';
 
-import '../../main.dart';
+import 'empty_page.dart';
 
-class OverviewPage extends StatelessWidget {
+class OverviewPage extends HookConsumerWidget {
   const OverviewPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final Future<String> foo = Future<String>.delayed(
-      const Duration(seconds: 1),
-      () => 'Overview Page',
-    );
-
-    buildWithBody(Widget body) {
-      double amountTotal = getTotalValue();
-
-      return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('Overview'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    buildBox(Widget widget, {required double width}) {
+      return [
+        SizedBox(
+          width: width,
+          child: widget,
         ),
-        body: body,
-        bottomNavigationBar: BottomAppBar(
-          child: ListTile(
-            leading: const Icon(Icons.house_outlined),
-            title: const Text('Total'),
-            trailing: Text('${amountTotal >= 0 ? '+' : '-'} $amountTotal'),
-            contentPadding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        Container(width: 0.5, color: Colors.grey),
+      ];
+    }
+
+    buildLargerScreen() {
+      final int currentAccountId = ref.watch(currentAccountProvider);
+      return Row(
+        children: [
+          ...buildBox(const AccountsPage(), width: 280.0),
+          if (currentAccountId != 0)
+            ...buildBox(const AccountTransactionsPage(), width: 320.0),
+          const Expanded(
+            child: EmptyPage(),
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            VRouter.of(context).to('/accounts/new');
-          },
-          child: const Icon(Icons.add),
-        ),
+        ],
       );
     }
 
-    mainBody() {
-      return SingleChildScrollView(
-        child: Row(children: [
-          Expanded(
-            child: GroupedListView<Account, String>(
-              elements: storeBox.accounts.getAll(),
-              groupBy: (element) =>
-                  element.type.target != null ? element.type.target!.name : '',
-              shrinkWrap: true,
-              scrollDirection: Axis.vertical,
-              // itemExtent: 40.0,
-              separator: const Divider(),
-              groupHeaderBuilder: (element) {
-                double amountInAccountType =
-                    getTotalValueByAccountType(element.type.targetId);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 8.0),
-                  child: Row(
-                    children: [
-                      Text(element.type.target != null
-                          ? element.type.target!.name
-                          : ''),
-                      const Spacer(),
-                      Text(
-                          '${amountInAccountType >= 0 ? '+' : '-'} $amountInAccountType'),
-                    ],
-                  ),
-                );
-              },
-              itemBuilder: (context, element) {
-                double amountInAccount = getTotalValueByAccount(element.id);
-                return ListTile(
-                  leading: const Icon(Icons.house_outlined),
-                  title: Text(element.name),
-                  subtitle: Text(
-                      element.description != null ? element.description! : ''),
-                  trailing: Text(
-                      '${amountInAccount >= 0 ? '+' : '-'} $amountInAccount'),
-                  contentPadding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0),
-                  onTap: () {
-                    context.vRouter.toSegments(
-                        ['accounts', element.id.toString(), 'transactions']);
-                  },
-                );
-              },
-            ),
-          ),
-        ]),
-      );
+    if (ScreenUtil().isLargeScreen(context)) {
+      return buildLargerScreen();
     }
 
-    return FutureBuilder(
-      future: foo,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return buildWithBody(mainBody());
-        }
-        return buildWithBody(const Center(child: CircularProgressIndicator()));
-      },
-    );
+    return const AccountsPage();
   }
 }
