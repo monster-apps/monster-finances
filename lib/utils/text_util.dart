@@ -3,6 +3,6 @@ class TextUtil {
     if (amount == 0) {
       return amount.toString();
     }
-    return '${amount >= 0 ? '+' : '-'} $amount';
+    return '${amount >= 0 ? '+' : '-'} ${amount.abs()}';
   }
 }
