@@ -2,7 +2,6 @@ import 'package:monster_finances/entities/account.dart';
 import 'package:monster_finances/main.dart';
 import 'package:monster_finances/objectbox.g.dart';
 
-
 class AccountQuery {
   List<Account> getAllAccounts() {
     return storeBox.accounts.getAll();
