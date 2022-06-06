@@ -22,26 +22,35 @@ jobs:
     #   with:
     #     java-version: '12.x'
 
-    # Setup the flutter environment.
-    - uses: subosito/flutter-action@v1
+    - name: Setup flutter environment
+      uses: subosito/flutter-action@v1
       with:
         channel: 'stable' # 'dev', 'alpha', default to: 'stable'
         # flutter-version: '1.12.x' # you can also specify exact version of flutter
 
-    # Get flutter dependencies.
-    - run: flutter pub get
+    - name: Get flutter dependencies
+      run: flutter pub get
 
-    # Check for any formatting issues in the code.
-    - run: flutter format . --set-exit-if-changed .
+    - name: Check for formatting issues in the code
+      run: flutter format . --set-exit-if-changed .
 
-    # Build generated files
-    - run: flutter pub run build_runner build --delete-conflicting-outputs
+    - name: Build generated files
+      run: flutter pub run build_runner build --delete-conflicting-outputs
 
-    # Statically analyze the Dart code for any errors.
-    - run: flutter analyze .
+    - name: Statically analyze the Dart code
+      run: flutter analyze .
 
-    # Run widget tests for our flutter project.
-    - run: flutter test
+    - name: Run tests with coverage for flutter project
+      run: flutter test --coverage
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        directory: ./coverage/reports/
+        fail_ci_if_error: true
+        files: ./coverage/lcov.info
+        path_to_write_report: ./coverage/codecov_report.txt
+        verbose: true
 
     # Build apk.
     # - run: flutter build apk
