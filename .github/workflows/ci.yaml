@@ -49,7 +49,6 @@ jobs:
         directory: ./coverage/reports/
         fail_ci_if_error: true
         files: ./coverage/lcov.info
-        path_to_write_report: ./coverage/codecov_report.txt
         verbose: true
 
     # Build apk.
