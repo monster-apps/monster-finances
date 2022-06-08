@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:monster_finances/widgets/input_dialog.dart';
 
 class AccountInfoPage extends StatelessWidget {
   const AccountInfoPage({Key? key}) : super(key: key);
+
+  _buildOverviewList(context) {
+    return [
+      const WidgetInputDialog(
+        label: "name",
+        title: "account",
+        value: "Bank of montreal",
+      ),
+      const ListTile(
+        leading: CircleAvatar(child: Text('N')),
+        title: Text('Description'),
+        subtitle: Text('001 23112 001 123 456 7'),
+      )
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +34,9 @@ class AccountInfoPage extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Accounts'),
             ),
-            body: Center(
-              child: Text('Page: ${snapshot.data}'),
+            body: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              children: _buildOverviewList(context),
             ),
           );
         }
