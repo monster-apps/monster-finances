@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/monster-apps/pre-commit-hooks.git
-    rev: 1.0.0
+    rev: 1.0.1
     hooks:
       - id: format
       - id: analyze
