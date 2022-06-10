@@ -11,7 +11,7 @@ void main() {
       expect(TextUtil().getFormattedAmount(15.0), '+ 15.0');
     });
 
-    test('should no symbol when value is zero', () {
+    test('should have no symbol when value is zero', () {
       expect(TextUtil().getFormattedAmount(0), '0.0');
     });
   });
