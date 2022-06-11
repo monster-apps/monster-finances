@@ -1,7 +1,8 @@
 repos:
   - repo: https://github.com/monster-apps/pre-commit-hooks.git
-    rev: 1.0.1
+    rev: 1.0.2
     hooks:
+      - id: coverage-helper
       - id: format
       - id: analyze
       - id: test
