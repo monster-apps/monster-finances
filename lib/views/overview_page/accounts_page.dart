@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/entities/account.dart';
+import 'package:monster_finances/providers/account_list_provider.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_type_provider.dart';
 import 'package:monster_finances/providers/total_amount_provider.dart';
-import 'package:monster_finances/queries/accounts.dart';
 import 'package:monster_finances/utils/select_account_util.dart';
 import 'package:monster_finances/utils/text_util.dart';
-import 'package:vrouter/vrouter.dart';
 
 class AccountsPage extends HookConsumerWidget {
   const AccountsPage({Key? key}) : super(key: key);
@@ -18,6 +17,10 @@ class AccountsPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final totalAmount = ref.watch(totalAmountProvider);
     final int currentAccountId = ref.watch(currentAccountProvider);
+
+    Future<void> createAccount() async {
+      ref.read(accountListProvider.notifier).add(Account(name: 'Bank F'));
+    }
 
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
@@ -39,8 +42,8 @@ class AccountsPage extends HookConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            VRouter.of(context).to('/accounts/new');
+          onPressed: () async {
+            await createAccount();
           },
           child: const Icon(Icons.add),
         ),
@@ -52,7 +55,7 @@ class AccountsPage extends HookConsumerWidget {
         child: Row(children: [
           Expanded(
             child: GroupedListView<Account, String>(
-              elements: AccountQuery().getAllAccounts(),
+              elements: ref.watch(accountListProvider),
               groupBy: (element) => element.type.target?.name ?? '',
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
