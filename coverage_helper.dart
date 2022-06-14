@@ -32,7 +32,6 @@ void main() async {
 
   buffer.writeln();
   buffer.writeln('void main() {}');
-  buffer.writeln();
 
   final output =
       File(cwd.resolve('test/coverage_helper_test.dart').toFilePath());

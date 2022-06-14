@@ -2,9 +2,10 @@
 // in monster_finances/test/test_utils.dart.
 // Do not manually edit this file.
 
-import 'package:flutter/foundation.dart' as _i3;
+import 'package:flutter/foundation.dart' as _i4;
+import 'package:flutter/rendering.dart' as _i3;
 import 'package:flutter/src/widgets/framework.dart' as _i2;
-import 'package:flutter/src/widgets/notification_listener.dart' as _i4;
+import 'package:flutter/src/widgets/notification_listener.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -32,7 +33,7 @@ class _FakeInheritedWidget_1 extends _i1.Fake implements _i2.InheritedWidget {
 class _FakeDiagnosticsNode_2 extends _i1.Fake implements _i3.DiagnosticsNode {
   @override
   String toString(
-          {_i3.TextTreeConfiguration? parentConfiguration,
+          {_i4.TextTreeConfiguration? parentConfiguration,
           _i3.DiagnosticLevel? minLevel = _i3.DiagnosticLevel.info}) =>
       super.toString();
 }
@@ -68,20 +69,20 @@ class MockBuildContext extends _i1.Mock implements _i2.BuildContext {
       super.noSuchMethod(Invocation.method(#visitChildElements, [visitor]),
           returnValueForMissingStub: null);
   @override
-  void dispatchNotification(_i4.Notification? notification) => super
+  void dispatchNotification(_i5.Notification? notification) => super
       .noSuchMethod(Invocation.method(#dispatchNotification, [notification]),
           returnValueForMissingStub: null);
   @override
   _i3.DiagnosticsNode describeElement(String? name,
-          {_i3.DiagnosticsTreeStyle? style =
-              _i3.DiagnosticsTreeStyle.errorProperty}) =>
+          {_i4.DiagnosticsTreeStyle? style =
+              _i4.DiagnosticsTreeStyle.errorProperty}) =>
       (super.noSuchMethod(
           Invocation.method(#describeElement, [name], {#style: style}),
           returnValue: _FakeDiagnosticsNode_2()) as _i3.DiagnosticsNode);
   @override
   _i3.DiagnosticsNode describeWidget(String? name,
-          {_i3.DiagnosticsTreeStyle? style =
-              _i3.DiagnosticsTreeStyle.errorProperty}) =>
+          {_i4.DiagnosticsTreeStyle? style =
+              _i4.DiagnosticsTreeStyle.errorProperty}) =>
       (super.noSuchMethod(
           Invocation.method(#describeWidget, [name], {#style: style}),
           returnValue: _FakeDiagnosticsNode_2()) as _i3.DiagnosticsNode);

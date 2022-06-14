@@ -39,14 +39,6 @@
           "flags": 520,
           "indexId": "2:8178785459679785756",
           "relationTarget": "AccountResponsible"
-        },
-        {
-          "id": "6:7916538139024947053",
-          "name": "operatingCurrencyId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "3:8499500121561902294",
-          "relationTarget": "Currency"
         }
       ],
       "relations": []
@@ -103,35 +95,6 @@
         {
           "id": "2:7040559672929470445",
           "name": "name",
-          "type": 9
-        }
-      ],
-      "relations": []
-    },
-    {
-      "id": "5:6017656818201636995",
-      "lastPropertyId": "4:2340445556690041187",
-      "name": "Currency",
-      "properties": [
-        {
-          "id": "1:6829534836591167321",
-          "name": "id",
-          "type": 6,
-          "flags": 1
-        },
-        {
-          "id": "2:2565068967677238216",
-          "name": "name",
-          "type": 9
-        },
-        {
-          "id": "3:3356291712489373657",
-          "name": "code",
-          "type": 9
-        },
-        {
-          "id": "4:2340445556690041187",
-          "name": "symbol",
           "type": 9
         }
       ],
@@ -209,14 +172,6 @@
           "relationTarget": "AccountResponsible"
         },
         {
-          "id": "9:230813915214697454",
-          "name": "currencyId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "6:133319262498614027",
-          "relationTarget": "Tag"
-        },
-        {
           "id": "10:5935338641769780368",
           "name": "accountId",
           "type": 11,
@@ -240,9 +195,21 @@
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredEntityUids": [
+    6017656818201636995
+  ],
+  "retiredIndexUids": [
+    8499500121561902294,
+    133319262498614027
+  ],
+  "retiredPropertyUids": [
+    7916538139024947053,
+    230813915214697454,
+    6829534836591167321,
+    2565068967677238216,
+    3356291712489373657,
+    2340445556690041187
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
