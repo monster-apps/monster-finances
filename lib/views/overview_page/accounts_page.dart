@@ -19,10 +19,6 @@ class AccountsPage extends HookConsumerWidget {
     final totalAmount = ref.watch(totalAmountProvider);
     final int currentAccountId = ref.watch(currentAccountProvider);
 
-    Future<void> createAccount() async {
-      ref.read(accountListProvider.notifier).add(Account(name: 'Bank F'));
-    }
-
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
       () => 'Overview Page',
