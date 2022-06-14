@@ -6,18 +6,20 @@ class AccountInfoPage extends HookConsumerWidget {
   const AccountInfoPage({Key? key}) : super(key: key);
 
   _buildOverviewList(context) {
-    return [
-      const WidgetInputDialog(
-        label: "name",
-        title: "account",
-        value: "Bank of montreal",
-      ),
-      const ListTile(
-        leading: CircleAvatar(child: Text('N')),
-        title: Text('Description'),
-        subtitle: Text('001 23112 001 123 456 7'),
-      )
-    ];
+    return ListTile.divideTiles(context: context, tiles: [
+      WidgetInputDialog(
+          title: "Name",
+          value: "Bank of montreal",
+          onConfirm: (value) {
+            print("called onConfirm $value");
+          }),
+      WidgetInputDialog(
+          title: "Description",
+          value: "Bank of montreal",
+          onConfirm: (value) {
+            print("called onConfirm $value");
+          }),
+    ]);
   }
 
   @override
