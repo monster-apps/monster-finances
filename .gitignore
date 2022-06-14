@@ -1,4 +1,5 @@
 # Miscellaneous
+*.mocks.dart
 coverage
 *.class
 *.log
