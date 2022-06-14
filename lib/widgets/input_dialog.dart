@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:vrouter/vrouter.dart';
 
 class WidgetInputDialog extends StatefulWidget {
@@ -18,7 +20,9 @@ class WidgetInputDialog extends StatefulWidget {
 }
 
 class _WidgetInputDialogState extends State<WidgetInputDialog> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
+
+  void _onChanged(dynamic val) => debugPrint(val.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +36,19 @@ class _WidgetInputDialogState extends State<WidgetInputDialog> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Add ${widget.title}'),
-              content: Form(
+              content: FormBuilder(
                 key: _formKey,
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter the ${widget.label}',
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some value';
-                    }
-                    return null;
-                  },
+                autovalidateMode: AutovalidateMode.disabled,
+                onChanged: () {
+                  _formKey.currentState!.save();
+                  debugPrint(_formKey.currentState!.value.toString());
+                },
+                child: FormBuilderTextField(
+                  name: 'account',
+                  onChanged: _onChanged,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
                 ),
               ),
               actions: <Widget>[
@@ -53,9 +58,14 @@ class _WidgetInputDialogState extends State<WidgetInputDialog> {
                 ),
                 TextButton(
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      context.vRouter.pop();
-                    }
+                    print("validation");
+                    print(_formKey.currentState?.saveAndValidate() ?? false);
+
+                    // if (_formKey.currentState!.validate()) {
+                    //   print(_formKey.currentState!.value);
+                    // } else {
+                    //   print("Error validation");
+                    // }
                   },
                   child: const Text('OK'),
                 ),

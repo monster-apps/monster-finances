@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/widgets/input_dialog.dart';
 
-class AccountInfoPage extends StatelessWidget {
+class AccountInfoPage extends HookConsumerWidget {
   const AccountInfoPage({Key? key}) : super(key: key);
 
   _buildOverviewList(context) {
@@ -20,7 +21,7 @@ class AccountInfoPage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
       () => 'Account Info Page',
