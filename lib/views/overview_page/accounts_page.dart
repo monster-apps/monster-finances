@@ -9,6 +9,7 @@ import 'package:monster_finances/providers/total_amount_by_account_type_provider
 import 'package:monster_finances/providers/total_amount_provider.dart';
 import 'package:monster_finances/utils/select_account_util.dart';
 import 'package:monster_finances/utils/text_util.dart';
+import 'package:vrouter/vrouter.dart';
 
 class AccountsPage extends HookConsumerWidget {
   const AccountsPage({Key? key}) : super(key: key);
@@ -42,8 +43,8 @@ class AccountsPage extends HookConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await createAccount();
+          onPressed: () {
+            VRouter.of(context).to('/accounts/new');
           },
           child: const Icon(Icons.add),
         ),
