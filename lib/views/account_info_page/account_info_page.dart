@@ -11,13 +11,13 @@ class AccountInfoPage extends HookConsumerWidget {
           title: "Name",
           value: "Bank of montreal",
           onConfirm: (value) {
-            print("called onConfirm $value");
+            debugPrint("called onConfirm $value");
           }),
       WidgetInputDialog(
           title: "Description",
           value: "Bank of montreal",
           onConfirm: (value) {
-            print("called onConfirm $value");
+            debugPrint("called onConfirm $value");
           }),
     ]);
   }
