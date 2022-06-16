@@ -3,7 +3,14 @@ import 'package:monster_finances/entities/account.dart';
 import 'package:monster_finances/main.dart';
 import 'package:monster_finances/queries/accounts.dart';
 
-final accountListProvider =
+final FutureProvider<List<Account>> accountListProvider =
+    FutureProvider((ref) async {
+  final accountList = ref.watch(accountListNotifierProvider);
+  return accountList;
+});
+
+final StateNotifierProvider<AccountListNotifier, List<Account>>
+    accountListNotifierProvider =
     StateNotifierProvider<AccountListNotifier, List<Account>>((ref) {
   return AccountListNotifier();
 });

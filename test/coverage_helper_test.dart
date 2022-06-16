@@ -28,6 +28,8 @@ import 'package:monster_finances/views/overview_page/overview_page.dart';
 import 'package:monster_finances/views/overview_page/accounts_page.dart';
 import 'package:monster_finances/views/overview_page/empty_page.dart';
 import 'package:monster_finances/views/transaction_page/transaction_page.dart';
+import 'package:monster_finances/widgets/error_indicator.dart';
+import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:monster_finances/widgets/input_dialog.dart';
 import 'package:monster_finances/entities/account_responsible.dart';
 import 'package:monster_finances/entities/account_type.dart';
