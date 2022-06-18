@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/providers/database_provider.dart';
 import 'package:monster_finances/store/store.dart';
 import 'package:monster_finances/views/account_info_page/account_info_page.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
@@ -16,10 +17,13 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   storeBox = await MonsterStore.create();
+  await storeBox.addInitialData();
+  await storeBox.addDevData();
 
   runApp(
-    const ProviderScope(
-      child: MonsterApp(),
+    ProviderScope(
+      overrides: [databaseProvider.overrideWithValue(storeBox)],
+      child: const MonsterApp(),
     ),
   );
 }

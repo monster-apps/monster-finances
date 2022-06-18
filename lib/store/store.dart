@@ -24,25 +24,34 @@ class MonsterStore {
     categories = Box<Category>(store);
     tags = Box<Tag>(store);
     transactions = Box<Transaction>(store);
+  }
 
+  /// Create an instance of ObjectBox to use throughout the app.
+  static Future<MonsterStore> create({String? directory}) async {
+    // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
+    final store = directory == null
+        ? await openStore(macosApplicationGroup: 'monster.finance')
+        : await openStore(
+            macosApplicationGroup: 'monster.finance',
+            directory: directory,
+          );
+    return MonsterStore._create(store);
+  }
+
+  Future<void> addInitialData() async {
     InitialData().createInitialData(
       store,
       accountTypes,
       categories,
     );
+  }
 
+  Future<void> addDevData() async {
     InitialData().createDevelopmentData(
       store,
       accounts,
       accountResponsible,
       transactions,
     );
-  }
-
-  /// Create an instance of ObjectBox to use throughout the app.
-  static Future<MonsterStore> create() async {
-    // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
-    final store = await openStore(macosApplicationGroup: 'monster.finance');
-    return MonsterStore._create(store);
   }
 }
