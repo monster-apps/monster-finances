@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'test_utils.mocks.dart';
+import 'fake_build_context.mocks.dart';
 
 @GenerateMocks([BuildContext])
-class TestUtil {
+class BuildContextTestUtil {
   BuildContext createFakeContext({double width = 600.0}) {
     final context = MockBuildContext();
 

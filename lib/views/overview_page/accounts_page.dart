@@ -52,12 +52,12 @@ class AccountsPage extends HookConsumerWidget {
           Expanded(
             child: GroupedListView<Account, String>(
               elements: accountList,
-              groupBy: (element) => element.type.target?.name ?? '',
+              groupBy: (Account element) => element.type.target?.name ?? '',
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               // itemExtent: 40.0,
               separator: const Divider(),
-              groupHeaderBuilder: (element) {
+              groupHeaderBuilder: (Account element) {
                 final amountByAccountType = ref.watch(
                     totalAmountByAccountTypeProvider(element.type.targetId));
                 return Padding(
@@ -72,7 +72,7 @@ class AccountsPage extends HookConsumerWidget {
                   ),
                 );
               },
-              itemBuilder: (context, element) {
+              itemBuilder: (BuildContext context, Account element) {
                 final amountByAccount =
                     ref.watch(totalAmountByAccountProvider(element.id));
                 return ListTile(
@@ -97,10 +97,13 @@ class AccountsPage extends HookConsumerWidget {
     return accountList.when(
       data: (data) => buildWithBody(mainBody(data)),
       error: (e, st) => buildWithBody(
-        ErrorIndicator(error: e),
+        ErrorIndicator(
+          key: const Key('error_account_list'),
+          error: e,
+        ),
       ),
       loading: () => buildWithBody(
-        const ProgressIndicator(),
+        const ProgressIndicator(key: Key('loading_account_list')),
       ),
     );
   }
