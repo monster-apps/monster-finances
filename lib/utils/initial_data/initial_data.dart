@@ -2,12 +2,10 @@ import 'package:monster_finances/entities/account.dart';
 import 'package:monster_finances/entities/account_responsible.dart';
 import 'package:monster_finances/entities/account_type.dart';
 import 'package:monster_finances/entities/category.dart';
-import 'package:monster_finances/entities/currency.dart';
 import 'package:monster_finances/entities/transaction.dart';
 import 'package:monster_finances/objectbox.g.dart';
 import 'package:monster_finances/utils/initial_data/account_type_data.dart';
 import 'package:monster_finances/utils/initial_data/category_data.dart';
-import 'package:monster_finances/utils/initial_data/currency_data.dart';
 import 'package:monster_finances/utils/initial_data/dev_data/account_data.dart';
 import 'package:monster_finances/utils/initial_data/dev_data/account_responsible_data.dart';
 import 'package:monster_finances/utils/initial_data/dev_data/transaction_data.dart';
@@ -17,7 +15,6 @@ class InitialData {
     Store store,
     Box<AccountType> accountTypes,
     Box<Category> categories,
-    Box<Currency> currencies,
   ) {
     _createManyIfEmpty(
       store,
@@ -29,12 +26,6 @@ class InitialData {
       store,
       initialCategories,
       categories,
-    );
-
-    _createManyIfEmpty(
-      store,
-      initialCurrencies,
-      currencies,
     );
   }
 
@@ -75,11 +66,6 @@ class InitialData {
         AccountType? accountType = accountTypeQuery.findFirst();
         accountTypeQuery.close();
         account.type.target = accountType!;
-
-        Query<Currency> currencyQuery = store.box<Currency>().query().build();
-        Currency? currency = currencyQuery.findFirst();
-        currencyQuery.close();
-        account.operatingCurrency.target = currency!;
 
         store.box<Account>().put(account);
       }

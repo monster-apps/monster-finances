@@ -2,7 +2,6 @@ import 'package:monster_finances/entities/account.dart';
 import 'package:monster_finances/entities/account_responsible.dart';
 import 'package:monster_finances/entities/account_type.dart';
 import 'package:monster_finances/entities/category.dart';
-import 'package:monster_finances/entities/currency.dart';
 import 'package:monster_finances/entities/tag.dart';
 import 'package:monster_finances/entities/transaction.dart';
 import 'package:monster_finances/objectbox.g.dart';
@@ -15,7 +14,6 @@ class MonsterStore {
   late final Box<AccountResponsible> accountResponsible;
   late final Box<AccountType> accountTypes;
   late final Box<Category> categories;
-  late final Box<Currency> currencies;
   late final Box<Tag> tags;
   late final Box<Transaction> transactions;
 
@@ -24,29 +22,36 @@ class MonsterStore {
     accountResponsible = Box<AccountResponsible>(store);
     accountTypes = Box<AccountType>(store);
     categories = Box<Category>(store);
-    currencies = Box<Currency>(store);
     tags = Box<Tag>(store);
     transactions = Box<Transaction>(store);
+  }
 
+  /// Create an instance of ObjectBox to use throughout the app.
+  static Future<MonsterStore> create({String? directory}) async {
+    // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
+    final store = directory == null
+        ? await openStore(macosApplicationGroup: 'monster.finance')
+        : await openStore(
+            macosApplicationGroup: 'monster.finance',
+            directory: directory,
+          );
+    return MonsterStore._create(store);
+  }
+
+  Future<void> addInitialData() async {
     InitialData().createInitialData(
       store,
       accountTypes,
       categories,
-      currencies,
     );
+  }
 
+  Future<void> addDevData() async {
     InitialData().createDevelopmentData(
       store,
       accounts,
       accountResponsible,
       transactions,
     );
-  }
-
-  /// Create an instance of ObjectBox to use throughout the app.
-  static Future<MonsterStore> create() async {
-    // Future<Store> openStore() {...} is defined in the generated objectbox.g.dart
-    final store = await openStore(macosApplicationGroup: 'monster.finance');
-    return MonsterStore._create(store);
   }
 }
