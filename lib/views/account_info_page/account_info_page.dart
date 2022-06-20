@@ -10,7 +10,7 @@ class AccountInfoPage extends HookConsumerWidget {
   _buildOverviewList(context) {
     return [
       WidgetInput(
-          icon: Icons.account_balance_outlined,
+          icon: Icons.person,
           title: "Name",
           hint: "Enter your account name",
           value: "Bank of montreal",
@@ -18,7 +18,6 @@ class AccountInfoPage extends HookConsumerWidget {
             debugPrint("called onChange $value");
           }),
       WidgetInput(
-          icon: Icons.description,
           title: "Description",
           hint: "Enter the description",
           value: "Bank of montreal",
@@ -26,7 +25,6 @@ class AccountInfoPage extends HookConsumerWidget {
             debugPrint("called onChange $value");
           }),
       WidgetChip(
-          icon: Icons.category_outlined,
           title: "Type",
           value: "Bank of montreal",
           options: const [
@@ -39,7 +37,6 @@ class AccountInfoPage extends HookConsumerWidget {
             debugPrint("called onChange $value");
           }),
       WidgetInput(
-          icon: Icons.accessibility_outlined,
           title: "Responsible",
           hint: "Name of responsible",
           value: "Bank of montreal",
