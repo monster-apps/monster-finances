@@ -19,7 +19,6 @@ class Transaction {
   final account = ToOne<Account>();
   final category = ToOne<Category>();
   final responsible = ToOne<AccountResponsible>();
-  final currency = ToOne<Tag>();
   final tags = ToMany<Tag>();
 
   late bool isPositiveValue;
