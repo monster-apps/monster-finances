@@ -1,26 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:monster_finances/widgets/input_dialog.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/widgets/list_chip.dart';
+import 'package:monster_finances/widgets/list_input.dart';
 
-class AccountInfoPage extends StatelessWidget {
+class AccountInfoPage extends HookConsumerWidget {
   const AccountInfoPage({Key? key}) : super(key: key);
 
   _buildOverviewList(context) {
     return [
-      const WidgetInputDialog(
-        label: "name",
-        title: "account",
-        value: "Bank of montreal",
-      ),
-      const ListTile(
-        leading: CircleAvatar(child: Text('N')),
-        title: Text('Description'),
-        subtitle: Text('001 23112 001 123 456 7'),
-      )
+      WidgetInput(
+          icon: Icons.person,
+          title: "Name",
+          hint: "Enter your account name",
+          value: "Bank of montreal",
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetInput(
+          title: "Description",
+          hint: "Enter the description",
+          value: "Bank of montreal",
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetChip(
+          title: "Type",
+          value: "Bank of montreal",
+          options: const [
+            FormBuilderChipOption(value: 'account', child: Text('Account')),
+            FormBuilderChipOption(
+                value: 'investment', child: Text('Investment')),
+            FormBuilderChipOption(value: 'business', child: Text('Business')),
+          ],
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetInput(
+          title: "Responsible",
+          hint: "Name of responsible",
+          value: "Bank of montreal",
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetInput(
+          icon: Icons.notes_outlined,
+          title: "Notes",
+          hint: "Add extra information",
+          value: "Bank of montreal",
+          maxLines: 5,
+          onChange: (value) {
+            debugPrint("called onConfirm $value");
+          }),
     ];
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final Future<String> foo = Future<String>.delayed(
       const Duration(seconds: 1),
       () => 'Account Info Page',
@@ -37,6 +73,13 @@ class AccountInfoPage extends StatelessWidget {
             body: ListView(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               children: _buildOverviewList(context),
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                debugPrint("save form");
+              },
+              label: const Text('Save'),
+              icon: const Icon(Icons.save),
             ),
           );
         }

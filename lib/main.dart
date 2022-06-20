@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/providers/database_provider.dart';
 import 'package:monster_finances/store/store.dart';
@@ -36,6 +37,12 @@ class MonsterApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return VRouter(
         title: 'Monster Finances',
+        supportedLocales: const [
+          Locale('en'),
+        ],
+        localizationsDelegates: const [
+          FormBuilderLocalizations.delegate,
+        ],
         theme: ThemeData(
             // This is the theme of your application.
             //
