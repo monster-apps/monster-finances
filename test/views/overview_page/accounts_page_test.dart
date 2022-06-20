@@ -9,6 +9,7 @@ import 'package:monster_finances/providers/account_list_provider.dart';
 import 'package:monster_finances/providers/account_query_provider.dart';
 import 'package:monster_finances/queries/accounts.dart';
 import 'package:monster_finances/views/overview_page/accounts_page.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../_test_utils/fake_accounts.dart';
 import 'accounts_page_test.mocks.dart';
@@ -183,6 +184,50 @@ void main() {
       expect(find.text('Bank 2'), findsOneWidget);
       expect(find.text('Bank 3'), findsOneWidget);
       expect(find.text('Bank 4'), findsOneWidget);
+    });
+  });
+
+  group('page actions should work properly', () {
+    testWidgets('floating action button should redirect to new account page',
+        (tester) async {
+      final MockAccountQuery accountQuery = MockAccountQuery();
+
+      when(accountQuery.getAllAccounts()).thenReturn(const []);
+      when(accountQuery.getTotalValue()).thenReturn(0);
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [accountQueryProvider.overrideWithValue(accountQuery)],
+          child: HookBuilder(
+            builder: (context) {
+              return VRouter(
+                initialUrl: '/',
+                routes: [
+                  VWidget(
+                    path: '/',
+                    widget: const MaterialApp(home: AccountsPage()),
+                  ),
+                  VWidget(
+                    path: '/accounts/new',
+                    widget: const Text('new account page'),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      expect(find.text('Overview'), findsOneWidget);
+      expect(find.text('new account page'), findsNothing);
+
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Overview'), findsNothing);
+      expect(find.text('new account page'), findsOneWidget);
     });
   });
 }
