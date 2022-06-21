@@ -1,8 +1,8 @@
-import 'package:monster_finances/entities/account.dart';
-import 'package:monster_finances/entities/account_responsible.dart';
-import 'package:monster_finances/entities/account_type.dart';
-import 'package:monster_finances/entities/category.dart';
-import 'package:monster_finances/entities/transaction.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
+import 'package:monster_finances/data/database/entities/account_responsible.dart';
+import 'package:monster_finances/data/database/entities/account_type.dart';
+import 'package:monster_finances/data/database/entities/category.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:monster_finances/objectbox.g.dart';
 import 'package:monster_finances/utils/initial_data/account_type_data.dart';
 import 'package:monster_finances/utils/initial_data/category_data.dart';

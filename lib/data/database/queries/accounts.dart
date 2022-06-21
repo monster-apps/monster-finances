@@ -1,5 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:monster_finances/entities/account.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:monster_finances/objectbox.g.dart';
 import 'package:monster_finances/providers/database_provider.dart';
 

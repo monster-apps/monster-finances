@@ -1,7 +1,7 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:monster_finances/entities/account.dart';
-import 'package:monster_finances/entities/account_type.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
+import 'package:monster_finances/data/database/entities/account_type.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'fake_accounts.mocks.dart';

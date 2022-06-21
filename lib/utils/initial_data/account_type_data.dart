@@ -1,4 +1,4 @@
-import 'package:monster_finances/entities/account_type.dart';
+import 'package:monster_finances/data/database/entities/account_type.dart';
 
 final initialAccountTypes = [
   AccountType(name: 'Account'),
