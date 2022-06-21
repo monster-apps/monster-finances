@@ -76,6 +76,7 @@ class AccountsPage extends HookConsumerWidget {
                 final amountByAccount =
                     ref.watch(totalAmountByAccountProvider(element.id));
                 return ListTile(
+                  key: Key('account-id-${element.id}'),
                   title: Text(element.name),
                   subtitle: Text(element.description ?? ''),
                   selected: currentAccountId == element.id,
