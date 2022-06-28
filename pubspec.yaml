@@ -33,7 +33,7 @@ dependencies:
   vrouter: ^1.2.0
   grouped_list: ^5.1.2
   objectbox: ^1.5.0
-  objectbox_flutter_libs: any
+  objectbox_flutter_libs: ^1.6.0
   package_info_plus: ^1.4.2
   flutter_hooks: ^0.18.5
   hooks_riverpod: ^2.0.0-dev.9
