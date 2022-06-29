@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:monster_finances/data/database/store/store.dart';
 import 'package:monster_finances/providers/database_provider.dart';
 import 'package:monster_finances/views/account_info_page/account_info_page.dart';
@@ -20,6 +21,8 @@ Future<void> main() async {
   storeBox = await MonsterStore.create();
   await storeBox.addInitialData();
   await storeBox.addDevData();
+
+  initializeDateFormatting('en');
 
   runApp(
     ProviderScope(
@@ -74,7 +77,7 @@ class MonsterApp extends StatelessWidget {
                       path:
                           '/accounts/:account_id/transactions/:transaction_id',
                       aliases: const ['/accounts/:account_id/transactions/new'],
-                      widget: const TransactionPage(),
+                      widget: TransactionPage(),
                     ),
                   ]),
             ],
