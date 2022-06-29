@@ -11,10 +11,12 @@ import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/last_responsible_selected_provider.dart';
 import 'package:monster_finances/providers/tags_selected_provider.dart';
 import 'package:monster_finances/providers/transaction_list_provider.dart';
+import 'package:monster_finances/utils/screen_util.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
 import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:monster_finances/widgets/responsible_chips.dart';
 import 'package:monster_finances/widgets/tags.dart';
+import 'package:vrouter/vrouter.dart';
 
 import '../../data/database/entities/transaction.dart';
 
@@ -151,8 +153,22 @@ class TransactionPage extends HookConsumerWidget {
               ref
                   .read(transactionListNotifierProvider.notifier)
                   .add(ref, transaction);
+
+              if (!ScreenUtil().isLargeScreen(context)) {
+                VRouter.of(context).pop();
+              }
+
+              const snackBar = SnackBar(
+                content: Text('Transaction saved successfully.'),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               debugPrint("validation failed");
+              const snackBar = SnackBar(
+                content: Text('We could\'t save this transaction. '
+                    'Please, fix the issues and try again.'),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
           label: const Text('Save'),
