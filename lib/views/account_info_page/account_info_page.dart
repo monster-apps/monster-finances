@@ -75,6 +75,7 @@ class AccountInfoPage extends HookConsumerWidget {
               children: _buildOverviewList(context),
             ),
             floatingActionButton: FloatingActionButton.extended(
+              heroTag: 'create-edit-account',
               onPressed: () {
                 debugPrint("save form");
               },

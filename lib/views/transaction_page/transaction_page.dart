@@ -130,6 +130,7 @@ class TransactionPage extends HookConsumerWidget {
         ),
         body: body,
         floatingActionButton: FloatingActionButton.extended(
+          heroTag: 'create-edit-transaction',
           onPressed: () {
             debugPrint("save form");
             _formKey.currentState!.save();

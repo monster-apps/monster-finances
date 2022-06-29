@@ -45,6 +45,7 @@ class AccountTransactionsPage extends StatelessWidget {
               child: Text('Page: ${snapshot.data}'),
             ),
             floatingActionButton: FloatingActionButton(
+              heroTag: 'go-to-create-transaction-page',
               onPressed: () {
                 context.vRouter
                     .toSegments(['accounts', '1', 'transactions', 'new']);

@@ -38,6 +38,7 @@ class AccountsPage extends HookConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: 'go-to-create-account-page',
           onPressed: () {
             VRouter.of(context).to('/accounts/new');
           },
