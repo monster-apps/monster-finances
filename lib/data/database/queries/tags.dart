@@ -14,4 +14,8 @@ class TagQuery {
   void put(Tag tag) {
     ref.read(databaseProvider).tags.put(tag);
   }
+
+  void remove(Tag tag) {
+    ref.read(databaseProvider).tags.remove(tag.id);
+  }
 }

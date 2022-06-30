@@ -9,11 +9,33 @@ import 'package:monster_finances/widgets/progress_indicator.dart';
 
 class Tags extends HookConsumerWidget {
   const Tags({Key? key}) : super(key: key);
+  static const String deleteConfirmationKey = "CONFIRMED";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AsyncValue<List<Tag>> tagList = ref.watch(tagListProvider);
     final AsyncValue<List<Tag>> selectedTags = ref.watch(tagsSelectedProvider);
+
+    _deleteDialog() {
+      return AlertDialog(
+        title: const Text('This tag is linked to other transactions'),
+        content: const Text(
+            'Deleting this tag will delete it for all already linked transactions. Are you sure you want to continue?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.red,
+            ),
+            onPressed: () => Navigator.pop(context, deleteConfirmationKey),
+            child: const Text('Delete'),
+          ),
+        ],
+      );
+    }
 
     _buildField(List<Tag> tagList) {
       return CustomChipsInput(
@@ -40,10 +62,19 @@ class Tags extends HookConsumerWidget {
             onSelected: (bool selected) {
               ref.read(tagsSelectedNotifierProvider.notifier).toggle(tag);
             },
-            // onDeleted: () {
-            //   ref.read(tagListNotifierProvider.notifier).remove(ref, tag);
-            //   state.deleteChip(tag);
-            // },
+            onDeleted: () async {
+              var shouldDelete = true;
+              if (tag.transactions.isNotEmpty) {
+                final result = await showDialog(
+                    context: context, builder: (context) => _deleteDialog());
+                shouldDelete = result == deleteConfirmationKey;
+              }
+
+              if (shouldDelete) {
+                ref.read(tagListNotifierProvider.notifier).remove(ref, tag);
+                state.deleteChip(tag);
+              }
+            },
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           );
         },
