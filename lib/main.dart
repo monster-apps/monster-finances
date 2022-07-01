@@ -7,8 +7,9 @@ import 'package:monster_finances/providers/database_provider.dart';
 import 'package:monster_finances/views/account_info_page/account_info_page.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
 import 'package:monster_finances/views/not_found.dart';
-import 'package:monster_finances/views/overview_page/overview_page.dart';
+import 'package:monster_finances/views/overview_page/accounts_page.dart';
 import 'package:monster_finances/views/transaction_page/transaction_page.dart';
+import 'package:monster_finances/views/wrapper_page.dart';
 import 'package:vrouter/vrouter.dart';
 
 late MonsterStore storeBox;
@@ -62,7 +63,7 @@ class MonsterApp extends StatelessWidget {
         routes: [
           VWidget(
             path: '/overview',
-            widget: const OverviewPage(),
+            widget: const WrapperPage(AccountsPage()),
             stackedRoutes: [
               VWidget(
                 path: '/accounts/:account_id',
@@ -71,13 +72,13 @@ class MonsterApp extends StatelessWidget {
               ),
               VWidget(
                   path: '/accounts/:account_id/transactions',
-                  widget: const AccountTransactionsPage(),
+                  widget: const WrapperPage(AccountTransactionsPage()),
                   stackedRoutes: [
                     VWidget(
                       path:
                           '/accounts/:account_id/transactions/:transaction_id',
                       aliases: const ['/accounts/:account_id/transactions/new'],
-                      widget: TransactionPage(),
+                      widget: WrapperPage(TransactionPage()),
                     ),
                   ]),
             ],

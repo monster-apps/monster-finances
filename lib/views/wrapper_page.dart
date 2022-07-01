@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
+import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/utils/screen_util.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
+import 'package:monster_finances/views/empty_page.dart';
 import 'package:monster_finances/views/overview_page/accounts_page.dart';
+import 'package:monster_finances/views/transaction_page/transaction_page.dart';
 
-import 'empty_page.dart';
+class WrapperPage extends HookConsumerWidget {
+  final Widget page;
 
-class OverviewPage extends HookConsumerWidget {
-  const OverviewPage({Key? key}) : super(key: key);
+  const WrapperPage(this.page, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,14 +28,19 @@ class OverviewPage extends HookConsumerWidget {
     }
 
     buildLargerScreen() {
-      final int currentAccountId = ref.watch(currentAccountProvider);
+      final Account? currentAccount = ref.watch(currentAccountProvider);
+      final Transaction? currentTransaction =
+          ref.watch(currentTransactionProvider);
+
       return Row(
         children: [
           ...buildBox(const AccountsPage(), width: 280.0),
-          if (currentAccountId != 0)
+          if (currentAccount != null)
             ...buildBox(const AccountTransactionsPage(), width: 320.0),
-          const Expanded(
-            child: EmptyPage(),
+          Expanded(
+            child: currentTransaction != null
+                ? TransactionPage()
+                : const EmptyPage(),
           ),
         ],
       );
@@ -40,6 +50,6 @@ class OverviewPage extends HookConsumerWidget {
       return buildLargerScreen();
     }
 
-    return const AccountsPage();
+    return page;
   }
 }

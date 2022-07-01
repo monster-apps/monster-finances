@@ -19,7 +19,7 @@ class AccountsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totalAmount = ref.watch(totalAmountProvider);
-    final int currentAccountId = ref.watch(currentAccountProvider);
+    final Account? currentAccount = ref.watch(currentAccountProvider);
     final AsyncValue<List<Account>> accountList =
         ref.watch(accountListProvider);
 
@@ -49,6 +49,7 @@ class AccountsPage extends HookConsumerWidget {
 
     mainBody(List<Account> accountList) {
       return SingleChildScrollView(
+        primary: false,
         child: Row(children: [
           Expanded(
             child: GroupedListView<Account, String>(
@@ -80,13 +81,13 @@ class AccountsPage extends HookConsumerWidget {
                   key: Key('account-id-${element.id}'),
                   title: Text(element.name),
                   subtitle: Text(element.description ?? ''),
-                  selected: currentAccountId == element.id,
+                  selected: currentAccount?.id == element.id,
                   trailing:
                       Text(TextUtil().getFormattedAmount(amountByAccount)),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
-                    SelectAccountUtil().select(context, ref, element.id);
+                    SelectAccountUtil().select(context, ref, element);
                   },
                 );
               },

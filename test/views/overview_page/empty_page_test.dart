@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:monster_finances/views/overview_page/empty_page.dart';
+import 'package:monster_finances/views/empty_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
