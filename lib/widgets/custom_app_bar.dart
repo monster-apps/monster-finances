@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monster_finances/utils/screen_util.dart';
+import 'package:vrouter/vrouter.dart';
 
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;
@@ -9,7 +10,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leading: !ScreenUtil().isLargeScreen(context)
+      leading: !ScreenUtil().isLargeScreen(context) &&
+              context.vRouter.path != '/overview' &&
+              VRouter.of(context).historyCanBack()
           ? const BackButton(
               color: Colors.black,
             )
