@@ -60,13 +60,12 @@ class TransactionPage extends HookConsumerWidget {
       ),
       FormBuilderDateTimePicker(
         name: 'date',
-        initialDate: transaction?.date,
+        initialValue: transaction != null ? transaction.date : DateTime.now(),
         inputType: InputType.date,
         decoration: const InputDecoration(
           labelText: 'Transaction Date',
           icon: Icon(null),
         ),
-        initialValue: DateTime.now(),
       ),
       FormBuilderDropdown(
         name: 'category',
@@ -151,6 +150,7 @@ class TransactionPage extends HookConsumerWidget {
               debugPrint(_formKey.currentState!.value.toString());
               final formValue = _formKey.currentState!.value;
               Transaction transaction = Transaction(
+                id: currentTransaction != null ? currentTransaction.id : 0,
                 value: double.parse(formValue['value']),
                 description: formValue['description'] ?? '',
                 date: formValue['date'],
@@ -174,6 +174,8 @@ class TransactionPage extends HookConsumerWidget {
               if (!ScreenUtil().isLargeScreen(context)) {
                 VRouter.of(context).pop();
               }
+
+              ref.read(tagsSelectedNotifierProvider.notifier).reset();
 
               const snackBar = SnackBar(
                 content: Text('Transaction saved successfully.'),

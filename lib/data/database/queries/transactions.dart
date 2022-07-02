@@ -26,7 +26,7 @@ class TransactionQuery {
         .find();
   }
 
-  void put(Transaction transaction) {
-    ref.read(databaseProvider).transactions.put(transaction);
+  int put(Transaction transaction) {
+    return ref.read(databaseProvider).transactions.put(transaction);
   }
 }
