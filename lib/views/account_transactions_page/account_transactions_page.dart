@@ -7,6 +7,7 @@ import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:monster_finances/providers/account_transaction_list_provider.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/current_transaction_provider.dart';
+import 'package:monster_finances/providers/is_creating_new_transaction_provider.dart';
 import 'package:monster_finances/utils/text_util.dart';
 import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
@@ -39,6 +40,8 @@ class AccountTransactionsPage extends HookConsumerWidget {
         floatingActionButton: FloatingActionButton(
           heroTag: 'go-to-create-transaction-page',
           onPressed: () {
+            ref.read(currentTransactionProvider.notifier).update(null);
+            ref.read(isCreatingNewTransactionProvider.notifier).update(true);
             VRouter.of(context).toSegments([
               'accounts',
               currentAccount!.id.toString(),

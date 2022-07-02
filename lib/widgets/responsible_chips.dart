@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/data/database/entities/account_responsible.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
+import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/providers/last_responsible_selected_provider.dart';
 import 'package:monster_finances/providers/responsible_list_provider.dart';
 import 'package:monster_finances/widgets/custom_chips_input.dart';
@@ -12,6 +14,9 @@ class ResponsibleChips extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final Transaction? currentTransaction =
+        ref.watch(currentTransactionProvider);
+
     final AsyncValue<List<AccountResponsible>> responsibleList =
         ref.watch(responsibleListProvider);
     final AsyncValue<AccountResponsible?> lastResponsibleSelected =
@@ -38,7 +43,10 @@ class ResponsibleChips extends HookConsumerWidget {
           return InputChip(
             key: ObjectKey(responsible.id),
             label: Text(responsible.name),
-            selected: lastResponsibleSelected.valueOrNull?.id == responsible.id,
+            selected: currentTransaction?.responsible.targetId ==
+                    responsible.id ||
+                (currentTransaction == null &&
+                    lastResponsibleSelected.valueOrNull?.id == responsible.id),
             onSelected: (bool selected) {
               ref
                   .read(lastResponsibleSelectedNotifierProvider.notifier)

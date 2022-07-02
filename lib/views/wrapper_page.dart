@@ -4,6 +4,7 @@ import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/current_transaction_provider.dart';
+import 'package:monster_finances/providers/is_creating_new_transaction_provider.dart';
 import 'package:monster_finances/utils/screen_util.dart';
 import 'package:monster_finances/views/account_transactions_page/account_transactions_page.dart';
 import 'package:monster_finances/views/empty_page.dart';
@@ -31,6 +32,8 @@ class WrapperPage extends HookConsumerWidget {
       final Account? currentAccount = ref.watch(currentAccountProvider);
       final Transaction? currentTransaction =
           ref.watch(currentTransactionProvider);
+      final bool isCreatingNewTransaction =
+          ref.watch(isCreatingNewTransactionProvider);
 
       return Row(
         children: [
@@ -38,7 +41,7 @@ class WrapperPage extends HookConsumerWidget {
           if (currentAccount != null)
             ...buildBox(const AccountTransactionsPage(), width: 320.0),
           Expanded(
-            child: currentTransaction != null
+            child: currentTransaction != null || isCreatingNewTransaction
                 ? TransactionPage()
                 : const EmptyPage(),
           ),

@@ -30,7 +30,10 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       overrides: [databaseProvider.overrideWithValue(storeBox)],
-      child: const MediaQuery(data: MediaQueryData(), child: MonsterApp()),
+      child: const MediaQuery(
+        data: MediaQueryData(),
+        child: MonsterApp(),
+      ),
     ),
   );
 }

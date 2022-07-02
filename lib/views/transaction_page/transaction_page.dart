@@ -70,7 +70,7 @@ class TransactionPage extends HookConsumerWidget {
       ),
       FormBuilderDropdown(
         name: 'category',
-        // initialValue: transaction?.category.target?.name,
+        initialValue: transaction?.category.targetId,
         decoration: const InputDecoration(
           labelText: 'Category',
           icon: Icon(null),
@@ -82,7 +82,7 @@ class TransactionPage extends HookConsumerWidget {
         ]),
         items: categories
             .map((category) => DropdownMenuItem(
-                  value: category,
+                  value: category.id,
                   child: Text(category.name),
                 ))
             .toList(),
@@ -165,7 +165,7 @@ class TransactionPage extends HookConsumerWidget {
                     lastResponsibleSelected.valueOrNull!;
               }
               if (formValue['category'] != null) {
-                transaction.category.target = formValue['category'];
+                transaction.category.targetId = formValue['category'];
               }
               ref
                   .read(accountTransactionListNotifierProvider.notifier)
