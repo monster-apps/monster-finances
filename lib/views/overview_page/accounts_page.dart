@@ -9,6 +9,7 @@ import 'package:monster_finances/providers/total_amount_by_account_type_provider
 import 'package:monster_finances/providers/total_amount_provider.dart';
 import 'package:monster_finances/utils/select_account_util.dart';
 import 'package:monster_finances/utils/text_util.dart';
+import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
 import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:vrouter/vrouter.dart';
@@ -25,10 +26,7 @@ class AccountsPage extends HookConsumerWidget {
 
     buildWithBody(Widget body) {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('Overview'),
-        ),
+        appBar: const CustomAppBar(title: 'Overview'),
         body: body,
         bottomNavigationBar: BottomAppBar(
           child: ListTile(

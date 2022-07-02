@@ -14,6 +14,7 @@ import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/providers/last_responsible_selected_provider.dart';
 import 'package:monster_finances/providers/tags_selected_provider.dart';
 import 'package:monster_finances/utils/screen_util.dart';
+import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
 import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:monster_finances/widgets/responsible_chips.dart';
@@ -139,10 +140,7 @@ class TransactionPage extends HookConsumerWidget {
 
     buildWithBody(Widget body) {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('Transaction'),
-        ),
+        appBar: const CustomAppBar(title: 'Transaction'),
         body: body,
         floatingActionButton: FloatingActionButton.extended(
           heroTag: 'create-edit-transaction',

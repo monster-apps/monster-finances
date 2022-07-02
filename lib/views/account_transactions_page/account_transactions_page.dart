@@ -8,6 +8,7 @@ import 'package:monster_finances/providers/account_transaction_list_provider.dar
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/utils/text_util.dart';
+import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
 import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:vrouter/vrouter.dart';
@@ -33,10 +34,7 @@ class AccountTransactionsPage extends HookConsumerWidget {
 
     buildWithBody(Widget body) {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: Text('${currentAccount?.name} Transactions'),
-        ),
+        appBar: CustomAppBar(title: '${currentAccount?.name} Transactions'),
         body: body,
         floatingActionButton: FloatingActionButton(
           heroTag: 'go-to-create-transaction-page',
