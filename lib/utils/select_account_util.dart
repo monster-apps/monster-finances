@@ -7,10 +7,12 @@ import 'package:vrouter/vrouter.dart';
 class SelectAccountUtil {
   void select(BuildContext context, WidgetRef ref, Account account) {
     ref.read(currentAccountProvider.notifier).update(ref, account);
-    VRouter.of(context).toSegments([
-      'accounts',
-      account.id.toString(),
-      'transactions',
-    ]);
+    VRouter.of(context).toSegments(
+      [
+        'accounts',
+        account.id.toString(),
+        'transactions',
+      ],
+    );
   }
 }
