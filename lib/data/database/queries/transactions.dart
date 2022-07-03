@@ -29,4 +29,8 @@ class TransactionQuery {
   int put(Transaction transaction) {
     return ref.read(databaseProvider).transactions.put(transaction);
   }
+
+  Transaction? getById(int transactionId) {
+    return ref.read(databaseProvider).transactions.get(transactionId);
+  }
 }

@@ -13,6 +13,7 @@ import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/providers/last_responsible_selected_provider.dart';
 import 'package:monster_finances/providers/tags_selected_provider.dart';
+import 'package:monster_finances/providers/transaction_query_provider.dart';
 import 'package:monster_finances/utils/screen_util.dart';
 import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
@@ -143,7 +144,7 @@ class TransactionPage extends HookConsumerWidget {
         body: body,
         floatingActionButton: FloatingActionButton.extended(
           heroTag: 'create-edit-transaction',
-          onPressed: () {
+          onPressed: () async {
             debugPrint("save form");
             _formKey.currentState!.save();
             if (_formKey.currentState!.validate()) {
@@ -167,12 +168,29 @@ class TransactionPage extends HookConsumerWidget {
               if (formValue['category'] != null) {
                 transaction.category.targetId = formValue['category'];
               }
-              ref
+
+              final InitializedVRouterSailor router = VRouter.of(context);
+              final ScaffoldMessengerState messenger =
+                  ScaffoldMessenger.of(context);
+              bool isLargeScreen = ScreenUtil().isLargeScreen(context);
+
+              int transactionId = await ref
                   .read(accountTransactionListNotifierProvider.notifier)
                   .add(ref, transaction);
 
-              if (!ScreenUtil().isLargeScreen(context)) {
-                VRouter.of(context).pop();
+              router.pop();
+              if (isLargeScreen) {
+                Transaction? transaction =
+                    ref.read(transactionQueryProvider).getById(transactionId);
+                ref
+                    .read(currentTransactionProvider.notifier)
+                    .update(transaction);
+                router.toSegments([
+                  'accounts',
+                  currentAccount!.id.toString(),
+                  'transactions',
+                  transactionId.toString()
+                ]);
               }
 
               ref.read(tagsSelectedNotifierProvider.notifier).reset();
@@ -180,7 +198,7 @@ class TransactionPage extends HookConsumerWidget {
               const snackBar = SnackBar(
                 content: Text('Transaction saved successfully.'),
               );
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              messenger.showSnackBar(snackBar);
             } else {
               debugPrint("validation failed");
               const snackBar = SnackBar(

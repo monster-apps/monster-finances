@@ -25,9 +25,8 @@ class AccountTransactionListNotifier extends StateNotifier<List<Transaction>> {
             .read(transactionQueryProvider)
             .getAccountTransactions(ref.watch(currentAccountProvider)));
 
-  void add(ref, Transaction transaction) async {
-    ref.read(transactionQueryProvider).put(transaction);
-
+  Future<int> add(ref, Transaction transaction) async {
+    int transactionId = ref.read(transactionQueryProvider).put(transaction);
     ref.refresh(totalAmountProvider);
     ref.refresh(totalAmountByAccountTypeProvider(
         transaction.account.target!.type.targetId));
@@ -36,5 +35,7 @@ class AccountTransactionListNotifier extends StateNotifier<List<Transaction>> {
     state = ref
         .read(transactionQueryProvider)
         .getAccountTransactions(ref.watch(currentAccountProvider));
+
+    return transactionId;
   }
 }
