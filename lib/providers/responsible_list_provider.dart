@@ -21,7 +21,7 @@ class ResponsibleListNotifier extends StateNotifier<List<AccountResponsible>> {
 
   void add(ref, AccountResponsible responsible) async {
     ref.read(responsibleQueryProvider).put(responsible);
-    state = [...state, responsible];
+    state = ref.read(responsibleQueryProvider).getAllResponsible();
   }
 
   void remove(ref, AccountResponsible responsible) async {

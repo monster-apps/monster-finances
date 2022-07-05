@@ -11,6 +11,7 @@ import 'package:monster_finances/widgets/progress_indicator.dart';
 
 class ResponsibleChips extends HookConsumerWidget {
   const ResponsibleChips({Key? key}) : super(key: key);
+  static const String deleteConfirmationKey = "CONFIRMED";
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,6 +22,28 @@ class ResponsibleChips extends HookConsumerWidget {
         ref.watch(responsibleListProvider);
     final AsyncValue<AccountResponsible?> lastResponsibleSelected =
         ref.watch(lastResponsibleSelectedProvider);
+
+    _deleteDialog() {
+      return AlertDialog(
+        title: const Text(
+            'This responsible is linked to other transactions or accounts'),
+        content: const Text(
+            'Deleting this responsible will delete it for all linked transactions and accounts. Are you sure you want to continue?'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              primary: Colors.red,
+            ),
+            onPressed: () => Navigator.pop(context, deleteConfirmationKey),
+            child: const Text('Delete'),
+          ),
+        ],
+      );
+    }
 
     _buildField(List<AccountResponsible> responsibleList) {
       return CustomChipsInput(
@@ -52,11 +75,21 @@ class ResponsibleChips extends HookConsumerWidget {
                   .read(lastResponsibleSelectedNotifierProvider.notifier)
                   .update(responsible);
             },
-            onDeleted: () {
-              ref
-                  .read(responsibleListNotifierProvider.notifier)
-                  .remove(ref, responsible);
-              state.deleteChip(responsible);
+            onDeleted: () async {
+              var shouldDelete = true;
+              if (responsible.transactions.isNotEmpty ||
+                  responsible.accounts.isNotEmpty) {
+                final result = await showDialog(
+                    context: context, builder: (context) => _deleteDialog());
+                shouldDelete = result == deleteConfirmationKey;
+              }
+
+              if (shouldDelete) {
+                ref
+                    .read(responsibleListNotifierProvider.notifier)
+                    .remove(ref, responsible);
+                state.deleteChip(responsible);
+              }
             },
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           );

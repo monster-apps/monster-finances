@@ -118,6 +118,7 @@ class TransactionPage extends HookConsumerWidget {
 
     mainBody(List<Category> categories) {
       return SingleChildScrollView(
+        controller: ScrollController(),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 64.0),
           child: FormBuilder(
