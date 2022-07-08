@@ -1,4 +1,4 @@
-import 'package:monster_finances/entities/transaction.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
 
 final devTransactions = [
   Transaction(

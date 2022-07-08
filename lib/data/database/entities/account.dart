@@ -1,9 +1,8 @@
-import 'package:monster_finances/entities/transaction.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'account_responsible.dart';
 import 'account_type.dart';
-import 'currency.dart';
 
 @Entity()
 class Account {
@@ -13,7 +12,6 @@ class Account {
 
   final type = ToOne<AccountType>();
   final responsible = ToOne<AccountResponsible>();
-  final operatingCurrency = ToOne<Currency>();
 
   @Backlink('account')
   final transactions = ToMany<Transaction>();

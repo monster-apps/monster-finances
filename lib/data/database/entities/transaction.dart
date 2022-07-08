@@ -1,4 +1,4 @@
-import 'package:monster_finances/entities/account.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'account_responsible.dart';
@@ -19,7 +19,6 @@ class Transaction {
   final account = ToOne<Account>();
   final category = ToOne<Category>();
   final responsible = ToOne<AccountResponsible>();
-  final currency = ToOne<Tag>();
   final tags = ToMany<Tag>();
 
   late bool isPositiveValue;

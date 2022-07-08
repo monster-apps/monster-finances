@@ -1,25 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:monster_finances/widgets/input_dialog.dart';
+import 'package:monster_finances/widgets/list_chip.dart';
+import 'package:monster_finances/widgets/list_input.dart';
 
 class AccountInfoPage extends HookConsumerWidget {
   const AccountInfoPage({Key? key}) : super(key: key);
 
   _buildOverviewList(context) {
-    return ListTile.divideTiles(context: context, tiles: [
-      WidgetInputDialog(
+    return [
+      WidgetInput(
+          icon: Icons.person,
           title: "Name",
+          hint: "Enter your account name",
           value: "Bank of montreal",
-          onConfirm: (value) {
-            debugPrint("called onConfirm $value");
+          onChange: (value) {
+            debugPrint("called onChange $value");
           }),
-      WidgetInputDialog(
+      WidgetInput(
           title: "Description",
+          hint: "Enter the description",
           value: "Bank of montreal",
-          onConfirm: (value) {
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetChip(
+          title: "Type",
+          value: "Bank of montreal",
+          options: const [
+            FormBuilderChipOption(value: 'account', child: Text('Account')),
+            FormBuilderChipOption(
+                value: 'investment', child: Text('Investment')),
+            FormBuilderChipOption(value: 'business', child: Text('Business')),
+          ],
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetInput(
+          title: "Responsible",
+          hint: "Name of responsible",
+          value: "Bank of montreal",
+          onChange: (value) {
+            debugPrint("called onChange $value");
+          }),
+      WidgetInput(
+          icon: Icons.notes_outlined,
+          title: "Notes",
+          hint: "Add extra information",
+          value: "Bank of montreal",
+          maxLines: 5,
+          onChange: (value) {
             debugPrint("called onConfirm $value");
           }),
-    ]);
+    ];
   }
 
   @override
@@ -40,6 +73,13 @@ class AccountInfoPage extends HookConsumerWidget {
             body: ListView(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               children: _buildOverviewList(context),
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                debugPrint("save form");
+              },
+              label: const Text('Save'),
+              icon: const Icon(Icons.save),
             ),
           );
         }

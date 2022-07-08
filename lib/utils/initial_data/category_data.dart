@@ -1,4 +1,4 @@
-import 'package:monster_finances/entities/category.dart';
+import 'package:monster_finances/data/database/entities/category.dart';
 
 final initialCategories = [
   Category(name: 'Housing'),
