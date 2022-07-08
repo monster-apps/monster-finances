@@ -1,4 +1,4 @@
-import 'package:monster_finances/entities/transaction.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'account_responsible.dart';

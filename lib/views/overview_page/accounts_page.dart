@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:grouped_list/grouped_list.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:monster_finances/entities/account.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:monster_finances/providers/account_list_provider.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_provider.dart';
