@@ -67,8 +67,9 @@ class AccountInfoPage extends HookConsumerWidget {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                if (_formKey.currentState!.saveAndValidate())
+                if (_formKey.currentState!.saveAndValidate()) {
                   debugPrint(_formKey.currentState!.value.entries.toString());
+                }
               },
               label: const Text('Save'),
               icon: const Icon(Icons.save),
