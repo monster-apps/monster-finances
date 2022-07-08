@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:monster_finances/widgets/input_dialog.dart';
+import 'package:monster_finances/widgets/list_input.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 void main() {
-  runApp(const HotreloadWidgetbook());
+  runApp(const HotReloadWidgetBook());
 }
 
-class HotreloadWidgetbook extends StatelessWidget {
-  const HotreloadWidgetbook({Key? key}) : super(key: key);
+class HotReloadWidgetBook extends StatelessWidget {
+  const HotReloadWidgetBook({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,11 @@ class HotreloadWidgetbook extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'elevated',
-                  builder: (context) => WidgetInputDialog(
+                  builder: (context) => WidgetInput(
                     title: "Title List",
-                    value: "description list item",
-                    onConfirm: (value) {
+                    hint: "Hint description",
+                    value: "value",
+                    onChange: (value) {
                       debugPrint("called onConfirm $value");
                     },
                   ),
