@@ -4,45 +4,37 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class WidgetInput extends HookWidget {
-  WidgetInput({
+  const WidgetInput({
     Key? key,
     this.icon,
     this.maxLines,
+    this.value,
     required this.title,
     required this.hint,
-    required this.value,
-    required this.onChange,
   }) : super(key: key);
 
-  final _formKey = GlobalKey<FormBuilderState>();
-
-  final IconData? icon;
-  final int? maxLines;
   final String title;
   final String hint;
-  final String value;
-  final ValueChanged<String?> onChange;
+  final IconData? icon;
+  final int? maxLines;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(icon),
-      title: FormBuilder(
-        key: _formKey,
-        child: FormBuilderTextField(
-          name: title,
-          maxLines: maxLines,
-          onChanged: onChange,
-          decoration: InputDecoration(
-            labelText: title,
-            alignLabelWithHint: true,
-            hintText: hint,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-          ),
-          validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(),
-          ]),
+      title: FormBuilderTextField(
+        name: title,
+        maxLines: maxLines,
+        decoration: InputDecoration(
+          labelText: title,
+          alignLabelWithHint: true,
+          hintText: hint,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
         ),
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.required(),
+        ]),
       ),
     );
   }

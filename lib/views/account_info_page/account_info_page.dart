@@ -6,54 +6,46 @@ import 'package:monster_finances/widgets/list_chip.dart';
 import 'package:monster_finances/widgets/list_input.dart';
 
 class AccountInfoPage extends HookConsumerWidget {
-  const AccountInfoPage({Key? key}) : super(key: key);
+  AccountInfoPage({Key? key}) : super(key: key);
+
+  final _formKey = GlobalKey<FormBuilderState>();
 
   _buildOverviewList(context) {
-    return [
-      WidgetInput(
-          icon: Icons.person,
-          title: "Name",
-          hint: "Enter your account name",
-          value: "Bank of montreal",
-          onChange: (value) {
-            debugPrint("called onChange $value");
-          }),
-      WidgetInput(
-          title: "Description",
-          hint: "Enter the description",
-          value: "Bank of montreal",
-          onChange: (value) {
-            debugPrint("called onChange $value");
-          }),
-      WidgetChip(
-          title: "Type",
-          value: "Bank of montreal",
-          options: const [
-            FormBuilderChipOption(value: 'account', child: Text('Account')),
-            FormBuilderChipOption(
-                value: 'investment', child: Text('Investment')),
-            FormBuilderChipOption(value: 'business', child: Text('Business')),
-          ],
-          onChange: (value) {
-            debugPrint("called onChange $value");
-          }),
-      WidgetInput(
-          title: "Responsible",
-          hint: "Name of responsible",
-          value: "Bank of montreal",
-          onChange: (value) {
-            debugPrint("called onChange $value");
-          }),
-      WidgetInput(
-          icon: Icons.notes_outlined,
-          title: "Notes",
-          hint: "Add extra information",
-          value: "Bank of montreal",
-          maxLines: 5,
-          onChange: (value) {
-            debugPrint("called onConfirm $value");
-          }),
-    ];
+    return FormBuilder(
+      key: _formKey,
+      child: Column(
+        children: const [
+          WidgetInput(
+            icon: Icons.person,
+            title: "Name",
+            hint: "Enter your account name",
+          ),
+          WidgetInput(
+            title: "Description",
+            hint: "Enter the description",
+          ),
+          WidgetChip(
+            title: "Type",
+            options: [
+              FormBuilderChipOption(value: 'account', child: Text('Account')),
+              FormBuilderChipOption(
+                  value: 'investment', child: Text('Investment')),
+              FormBuilderChipOption(value: 'business', child: Text('Business')),
+            ],
+          ),
+          WidgetInput(
+            title: "Responsible",
+            hint: "Name of responsible",
+          ),
+          WidgetInput(
+            icon: Icons.notes_outlined,
+            title: "Notes",
+            hint: "Add extra information",
+            maxLines: 5,
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -70,13 +62,14 @@ class AccountInfoPage extends HookConsumerWidget {
           return Scaffold(
             appBar: const CustomAppBar(title: 'Accounts'),
             body: ListView(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              children: _buildOverviewList(context),
+              children: [_buildOverviewList(context)],
             ),
             floatingActionButton: FloatingActionButton.extended(
               heroTag: 'create-edit-account',
               onPressed: () {
-                debugPrint("save form");
+                if (_formKey.currentState!.saveAndValidate()) {
+                  debugPrint(_formKey.currentState!.value.entries.toString());
+                }
               },
               label: const Text('Save'),
               icon: const Icon(Icons.save),

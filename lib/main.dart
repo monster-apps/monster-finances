@@ -87,7 +87,7 @@ class MonsterApp extends StatelessWidget {
                   VWidget(
                     path: '/accounts/:account_id',
                     aliases: const ['/accounts/new'],
-                    widget: const AccountInfoPage(),
+                    widget: AccountInfoPage(),
                   ),
                   VWidget(
                     path: '/accounts/:account_id/transactions',
