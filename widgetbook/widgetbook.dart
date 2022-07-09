@@ -21,13 +21,10 @@ class HotReloadWidgetBook extends StatelessWidget {
               useCases: [
                 WidgetbookUseCase(
                   name: 'elevated',
-                  builder: (context) => WidgetInput(
+                  builder: (context) => const WidgetInput(
                     title: "Title List",
                     hint: "Hint description",
                     value: "value",
-                    onChange: (value) {
-                      debugPrint("called onConfirm $value");
-                    },
                   ),
                 ),
               ],
