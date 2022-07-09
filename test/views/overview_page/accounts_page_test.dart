@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mockito/annotations.dart';
@@ -20,7 +21,15 @@ ProviderScope getProviderScope(MockAccountQuery accountQuery) {
     overrides: [accountQueryProvider.overrideWithValue(accountQuery)],
     child: HookBuilder(
       builder: (context) {
-        return const MaterialApp(home: AccountsPage());
+        return ScreenUtilInit(
+          designSize: Size(Config().breakpoint - 1, 420.0),
+          builder: (BuildContext context, Widget? child) {
+            return MaterialApp(
+              home: child,
+            );
+          },
+          child: const AccountsPage(),
+        );
       },
     ),
   );
@@ -43,7 +52,15 @@ void main() {
           ],
           child: HookBuilder(
             builder: (context) {
-              return const MaterialApp(home: AccountsPage());
+              return ScreenUtilInit(
+                designSize: Size(Config().breakpoint - 1, 420.0),
+                builder: (BuildContext context, Widget? child) {
+                  return MaterialApp(
+                    home: child,
+                  );
+                },
+                child: const AccountsPage(),
+              );
             },
           ),
         ),
@@ -66,7 +83,15 @@ void main() {
           ],
           child: HookBuilder(
             builder: (context) {
-              return const MaterialApp(home: AccountsPage());
+              return ScreenUtilInit(
+                designSize: Size(Config().breakpoint - 1, 420.0),
+                builder: (BuildContext context, Widget? child) {
+                  return MaterialApp(
+                    home: child,
+                  );
+                },
+                child: const AccountsPage(),
+              );
             },
           ),
         ),
@@ -201,18 +226,25 @@ void main() {
           overrides: [accountQueryProvider.overrideWithValue(accountQuery)],
           child: HookBuilder(
             builder: (context) {
-              return VRouter(
-                initialUrl: '/',
-                routes: [
-                  VWidget(
-                    path: '/',
-                    widget: const MaterialApp(home: AccountsPage()),
-                  ),
-                  VWidget(
-                    path: '/accounts/new',
-                    widget: const Text('new account page'),
-                  ),
-                ],
+              return ScreenUtilInit(
+                builder: (BuildContext context, Widget? child) {
+                  return MaterialApp(
+                    home: child,
+                  );
+                },
+                child: VRouter(
+                  initialUrl: '/',
+                  routes: [
+                    VWidget(
+                      path: '/',
+                      widget: const AccountsPage(),
+                    ),
+                    VWidget(
+                      path: '/accounts/new',
+                      widget: const Text('new account page'),
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -234,12 +266,6 @@ void main() {
     testWidgets(
         'selecting an account on a small screen should redirect to transactions page',
         (tester) async {
-      final dpi = tester.binding.window.devicePixelRatio;
-      tester.binding.window.physicalSizeTestValue = Size(
-        (Config().breakpoint - 1) * dpi,
-        420.0 * dpi,
-      );
-
       final MockAccountQuery accountQuery = MockAccountQuery();
 
       final List<Account> accounts = [
@@ -256,18 +282,26 @@ void main() {
           overrides: [accountQueryProvider.overrideWithValue(accountQuery)],
           child: HookBuilder(
             builder: (context) {
-              return VRouter(
-                initialUrl: '/',
-                routes: [
-                  VWidget(
-                    path: '/',
-                    widget: const MaterialApp(home: AccountsPage()),
-                  ),
-                  VWidget(
-                    path: '/accounts/:account_id/transactions',
-                    widget: const Text('transactions page'),
-                  ),
-                ],
+              return ScreenUtilInit(
+                designSize: Size(Config().breakpoint - 1, 420.0),
+                builder: (BuildContext context, Widget? child) {
+                  return MaterialApp(
+                    home: child,
+                  );
+                },
+                child: VRouter(
+                  initialUrl: '/',
+                  routes: [
+                    VWidget(
+                      path: '/',
+                      widget: const AccountsPage(),
+                    ),
+                    VWidget(
+                      path: '/accounts/:account_id/transactions',
+                      widget: const Text('transactions page'),
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -288,8 +322,6 @@ void main() {
 
       expect(find.text('Overview'), findsNothing);
       expect(find.text('transactions page'), findsOneWidget);
-
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
     });
   });
 }
