@@ -33,4 +33,8 @@ class TransactionQuery {
   Transaction? getById(int transactionId) {
     return ref.read(databaseProvider).transactions.get(transactionId);
   }
+
+  void delete(int transactionId) {
+    ref.read(databaseProvider).transactions.remove(transactionId);
+  }
 }

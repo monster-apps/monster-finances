@@ -1,6 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/data/database/entities/transaction.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
+import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_provider.dart';
 import 'package:monster_finances/providers/total_amount_by_account_type_provider.dart';
 import 'package:monster_finances/providers/total_amount_provider.dart';
@@ -37,5 +38,18 @@ class AccountTransactionListNotifier extends StateNotifier<List<Transaction>> {
         .getAccountTransactions(ref.watch(currentAccountProvider));
 
     return transactionId;
+  }
+
+  void delete(ref, Transaction transaction) async {
+    ref.read(transactionQueryProvider).delete(transaction.id);
+    ref.read(currentTransactionProvider.notifier).update(null);
+    ref.refresh(totalAmountProvider);
+    ref.refresh(totalAmountByAccountTypeProvider(
+        transaction.account.target!.type.targetId));
+    ref.refresh(totalAmountByAccountProvider(transaction.account.targetId));
+
+    state = ref
+        .read(transactionQueryProvider)
+        .getAccountTransactions(ref.watch(currentAccountProvider));
   }
 }

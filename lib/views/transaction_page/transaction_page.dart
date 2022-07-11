@@ -116,24 +116,56 @@ class TransactionPage extends HookConsumerWidget {
     final AsyncValue<AccountResponsible?> lastResponsibleSelected =
         ref.watch(lastResponsibleSelectedProvider);
 
+    deleteButton() {
+      return Center(
+        child: ElevatedButton.icon(
+          icon: const Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.deepOrange,
+          ),
+          onPressed: () {
+            ref
+                .read(accountTransactionListNotifierProvider.notifier)
+                .delete(ref, currentTransaction!);
+            VRouter.of(context).pop();
+          },
+          label: const Text(
+            'Delete Transaction',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+
     mainBody(List<Category> categories) {
       return SingleChildScrollView(
         controller: ScrollController(),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 64.0),
-          child: FormBuilder(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.disabled,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: _buildFormFields(
-                  context,
-                  categories,
-                  currentTransaction,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FormBuilder(
+                key: _formKey,
+                autovalidateMode: AutovalidateMode.disabled,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: _buildFormFields(
+                      context,
+                      categories,
+                      currentTransaction,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              if (currentTransaction != null) deleteButton()
+            ],
           ),
         ),
       );
