@@ -1,5 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:monster_finances/data/database/entities/transaction.dart';
+import 'package:monster_finances/objectbox.g.dart';
 import 'package:monster_finances/providers/database_provider.dart';
 
 class TransactionQuery {
@@ -11,7 +13,28 @@ class TransactionQuery {
     return ref.read(databaseProvider).transactions.getAll();
   }
 
-  void put(Transaction transaction) {
-    ref.read(databaseProvider).transactions.put(transaction);
+  List<Transaction> getAccountTransactions(Account? account) {
+    if (account == null) {
+      return const [];
+    }
+
+    return ref
+        .read(databaseProvider)
+        .transactions
+        .query(Transaction_.account.equals(account.id))
+        .build()
+        .find();
+  }
+
+  int put(Transaction transaction) {
+    return ref.read(databaseProvider).transactions.put(transaction);
+  }
+
+  Transaction? getById(int transactionId) {
+    return ref.read(databaseProvider).transactions.get(transactionId);
+  }
+
+  void delete(int transactionId) {
+    ref.read(databaseProvider).transactions.remove(transactionId);
   }
 }

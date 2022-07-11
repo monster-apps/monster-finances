@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide ProgressIndicator;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:monster_finances/data/database/entities/tag.dart';
+import 'package:monster_finances/data/database/entities/transaction.dart';
+import 'package:monster_finances/providers/current_transaction_provider.dart';
 import 'package:monster_finances/providers/tag_list_provider.dart';
 import 'package:monster_finances/providers/tags_selected_provider.dart';
 import 'package:monster_finances/widgets/custom_chips_input.dart';
@@ -13,6 +15,9 @@ class Tags extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final Transaction? currentTransaction =
+        ref.watch(currentTransactionProvider);
+
     final AsyncValue<List<Tag>> tagList = ref.watch(tagListProvider);
     final AsyncValue<List<Tag>> selectedTags = ref.watch(tagsSelectedProvider);
 
@@ -58,7 +63,12 @@ class Tags extends HookConsumerWidget {
           return InputChip(
             key: ObjectKey(tag.id),
             label: Text(tag.value),
-            selected: selectedTags.valueOrNull?.contains(tag) ?? false,
+            selected: currentTransaction?.tags
+                    .any((element) => element.id == tag.id) ??
+                false ||
+                    (currentTransaction == null &&
+                        selectedTags.hasValue &&
+                        selectedTags.value!.contains(tag)),
             onSelected: (bool selected) {
               ref.read(tagsSelectedNotifierProvider.notifier).toggle(tag);
             },

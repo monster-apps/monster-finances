@@ -16,6 +16,10 @@ final StateNotifierProvider<TagsSelectedNotifier, List<Tag>>
 class TagsSelectedNotifier extends StateNotifier<List<Tag>> {
   TagsSelectedNotifier() : super(const []);
 
+  void reset() {
+    state = const [];
+  }
+
   void toggle(Tag tag) {
     if (state.contains(tag)) {
       state.remove(tag);

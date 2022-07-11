@@ -11,11 +11,15 @@ class ResponsibleQuery {
     return ref.read(databaseProvider).accountResponsible.getAll();
   }
 
-  void put(AccountResponsible responsible) {
-    ref.read(databaseProvider).accountResponsible.put(responsible);
+  int put(AccountResponsible responsible) {
+    return ref.read(databaseProvider).accountResponsible.put(responsible);
   }
 
   void remove(AccountResponsible responsible) {
     ref.read(databaseProvider).accountResponsible.remove(responsible.id);
+  }
+
+  AccountResponsible? getById(int responsibleId) {
+    return ref.read(databaseProvider).accountResponsible.get(responsibleId);
   }
 }

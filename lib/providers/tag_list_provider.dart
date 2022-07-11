@@ -18,7 +18,7 @@ class TagListNotifier extends StateNotifier<List<Tag>> {
 
   void add(ref, Tag tag) async {
     ref.read(tagQueryProvider).put(tag);
-    state = [...state, tag];
+    state = ref.read(tagQueryProvider).getAllTags();
   }
 
   void remove(ref, Tag tag) async {
