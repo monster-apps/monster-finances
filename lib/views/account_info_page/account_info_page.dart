@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/list_chip.dart';
 import 'package:monster_finances/widgets/list_input.dart';
 
@@ -59,13 +60,12 @@ class AccountInfoPage extends HookConsumerWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
-            appBar: AppBar(
-              title: const Text('Accounts'),
-            ),
+            appBar: const CustomAppBar(title: 'Accounts'),
             body: ListView(
               children: [_buildOverviewList(context)],
             ),
             floatingActionButton: FloatingActionButton.extended(
+              heroTag: 'create-edit-account',
               onPressed: () {
                 if (_formKey.currentState!.saveAndValidate()) {
                   debugPrint(_formKey.currentState!.value.entries.toString());

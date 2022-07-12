@@ -9,6 +9,7 @@ import 'package:monster_finances/providers/total_amount_by_account_type_provider
 import 'package:monster_finances/providers/total_amount_provider.dart';
 import 'package:monster_finances/utils/select_account_util.dart';
 import 'package:monster_finances/utils/text_util.dart';
+import 'package:monster_finances/widgets/custom_app_bar.dart';
 import 'package:monster_finances/widgets/error_indicator.dart';
 import 'package:monster_finances/widgets/progress_indicator.dart';
 import 'package:vrouter/vrouter.dart';
@@ -19,16 +20,13 @@ class AccountsPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final totalAmount = ref.watch(totalAmountProvider);
-    final int currentAccountId = ref.watch(currentAccountProvider);
+    final Account? currentAccount = ref.watch(currentAccountProvider);
     final AsyncValue<List<Account>> accountList =
         ref.watch(accountListProvider);
 
     buildWithBody(Widget body) {
       return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: const Text('Overview'),
-        ),
+        appBar: const CustomAppBar(title: 'Overview'),
         body: body,
         bottomNavigationBar: BottomAppBar(
           child: ListTile(
@@ -38,6 +36,7 @@ class AccountsPage extends HookConsumerWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          heroTag: 'go-to-create-account-page',
           onPressed: () {
             VRouter.of(context).to('/accounts/new');
           },
@@ -48,6 +47,7 @@ class AccountsPage extends HookConsumerWidget {
 
     mainBody(List<Account> accountList) {
       return SingleChildScrollView(
+        primary: false,
         child: Row(children: [
           Expanded(
             child: GroupedListView<Account, String>(
@@ -79,13 +79,13 @@ class AccountsPage extends HookConsumerWidget {
                   key: Key('account-id-${element.id}'),
                   title: Text(element.name),
                   subtitle: Text(element.description ?? ''),
-                  selected: currentAccountId == element.id,
+                  selected: currentAccount?.id == element.id,
                   trailing:
                       Text(TextUtil().getFormattedAmount(amountByAccount)),
                   contentPadding:
                       const EdgeInsets.only(left: 16.0, right: 16.0),
                   onTap: () {
-                    SelectAccountUtil().select(context, ref, element.id);
+                    SelectAccountUtil().select(context, ref, element);
                   },
                 );
               },
