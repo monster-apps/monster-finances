@@ -24,7 +24,7 @@ class HotReloadWidgetBook extends StatelessWidget {
                   builder: (context) => const WidgetInput(
                     title: "Title List",
                     hint: "Hint description",
-                    value: "value",
+                    initialValue: "value",
                   ),
                 ),
               ],
