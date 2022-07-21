@@ -9,6 +9,7 @@ class Account {
   int id = 0;
   String name;
   String? description;
+  String? notes;
 
   final type = ToOne<AccountType>();
   final responsible = ToOne<AccountResponsible>();
@@ -16,9 +17,5 @@ class Account {
   @Backlink('account')
   final transactions = ToMany<Transaction>();
 
-  Account({
-    this.id = 0,
-    required this.name,
-    this.description,
-  });
+  Account({this.id = 0, required this.name, this.description, this.notes});
 }
