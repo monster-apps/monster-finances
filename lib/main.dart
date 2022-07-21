@@ -70,14 +70,21 @@ class MonsterApp extends StatelessWidget {
                 // is not restarted.
                 primarySwatch: Colors.blue,
                 useMaterial3: true),
-            transitionDuration: Duration(
-              milliseconds:
-                  app_screen_util.ScreenUtil().isLargeScreen(context) ? 0 : 300,
-            ),
-            reverseTransitionDuration: Duration(
-              milliseconds:
-                  app_screen_util.ScreenUtil().isLargeScreen(context) ? 0 : 300,
-            ),
+            buildTransition: (animation, secondaryAnimation, child) {
+              if (app_screen_util.ScreenUtil().isLargeScreen(context)) {
+                return child;
+              }
+
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              final tween = Tween(begin: begin, end: end);
+              final offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
             initialUrl: "/overview",
             routes: [
               VWidget(
