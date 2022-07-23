@@ -34,6 +34,7 @@ class TransactionPage extends HookConsumerWidget {
     return [
       FormBuilderTextField(
         name: 'value',
+        textInputAction: TextInputAction.next,
         initialValue: transaction?.value.toString(),
         keyboardType: const TextInputType.numberWithOptions(
           signed: true,
@@ -53,6 +54,7 @@ class TransactionPage extends HookConsumerWidget {
       ),
       FormBuilderTextField(
         name: 'description',
+        textInputAction: TextInputAction.next,
         initialValue: transaction?.description,
         decoration: const InputDecoration(
           labelText: 'Description',
@@ -61,6 +63,7 @@ class TransactionPage extends HookConsumerWidget {
       ),
       FormBuilderDateTimePicker(
         name: 'date',
+        textInputAction: TextInputAction.next,
         initialValue: transaction != null ? transaction.date : DateTime.now(),
         inputType: InputType.date,
         decoration: const InputDecoration(
@@ -174,7 +177,9 @@ class TransactionPage extends HookConsumerWidget {
     buildWithBody(Widget body) {
       return Scaffold(
         appBar: const CustomAppBar(title: 'Transaction'),
-        body: body,
+        body: SafeArea(
+          child: body,
+        ),
         floatingActionButton: FloatingActionButton.extended(
           heroTag: 'create-edit-transaction',
           onPressed: () async {
