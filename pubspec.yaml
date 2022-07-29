@@ -41,7 +41,7 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   flutter_form_builder: ^7.5.0
   form_builder_validators: ^8.2.0
-  form_builder_extra_fields: ^8.2.0
+  form_builder_extra_fields: ^8.3.0
   cupertino_icons: ^1.0.5
 
 dev_dependencies:
