@@ -503,7 +503,7 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "5.3.0"
   move_to_background:
     dependency: transitive
     description:
