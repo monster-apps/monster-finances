@@ -127,7 +127,7 @@ class TransactionPage extends HookConsumerWidget {
             color: Colors.white,
           ),
           style: ElevatedButton.styleFrom(
-            primary: Colors.deepOrange,
+            backgroundColor: Colors.deepOrange,
           ),
           onPressed: () {
             ref

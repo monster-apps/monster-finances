@@ -6,13 +6,13 @@ class EmptyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<PackageInfo> _getPackageInfo() async {
+    Future<PackageInfo> getPackageInfo() async {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       return packageInfo;
     }
 
     return FutureBuilder<PackageInfo>(
-      future: _getPackageInfo(),
+      future: getPackageInfo(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Scaffold(

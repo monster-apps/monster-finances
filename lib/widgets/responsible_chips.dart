@@ -23,7 +23,7 @@ class ResponsibleChips extends HookConsumerWidget {
     final AsyncValue<AccountResponsible?> lastResponsibleSelected =
         ref.watch(lastResponsibleSelectedProvider);
 
-    _deleteDialog() {
+    deleteDialog() {
       return AlertDialog(
         title: const Text(
             'This responsible is linked to other transactions or accounts'),
@@ -36,7 +36,7 @@ class ResponsibleChips extends HookConsumerWidget {
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.red,
+              foregroundColor: Colors.red,
             ),
             onPressed: () => Navigator.pop(context, deleteConfirmationKey),
             child: const Text('Delete'),
@@ -45,7 +45,7 @@ class ResponsibleChips extends HookConsumerWidget {
       );
     }
 
-    _buildField(List<AccountResponsible> responsibleList) {
+    buildField(List<AccountResponsible> responsibleList) {
       return CustomChipsInput(
         name: 'responsible',
         initialValue: responsibleList,
@@ -80,7 +80,7 @@ class ResponsibleChips extends HookConsumerWidget {
               if (responsible.transactions.isNotEmpty ||
                   responsible.accounts.isNotEmpty) {
                 final result = await showDialog(
-                    context: context, builder: (context) => _deleteDialog());
+                    context: context, builder: (context) => deleteDialog());
                 shouldDelete = result == deleteConfirmationKey;
               }
 
@@ -98,7 +98,7 @@ class ResponsibleChips extends HookConsumerWidget {
     }
 
     return responsibleList.when(
-      data: (data) => _buildField(data),
+      data: (data) => buildField(data),
       error: (e, st) => ErrorIndicator(
         key: const Key('error_responsible_list'),
         error: e,

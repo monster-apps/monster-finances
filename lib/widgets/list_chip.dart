@@ -25,7 +25,7 @@ class WidgetChip extends HookConsumerWidget {
     final AsyncValue<List<AccountType>> accountTypeList =
         ref.watch(accountTypeListProvider);
 
-    _buildFields(List<AccountType> accountTypeList) {
+    buildFields(List<AccountType> accountTypeList) {
       List<FormBuilderChipOption<int>> accountTypeOptions = accountTypeList
           .map((e) =>
               FormBuilderChipOption<int>(value: e.id, child: Text(e.name)))
@@ -54,7 +54,7 @@ class WidgetChip extends HookConsumerWidget {
     }
 
     return accountTypeList.when(
-      data: (data) => _buildFields(data),
+      data: (data) => buildFields(data),
       error: (e, st) => ErrorIndicator(
         key: const Key('error_responsible_list'),
         error: e,

@@ -16,7 +16,7 @@ class ErrorIndicator extends HookConsumerWidget {
     final AsyncValue<List<Category>> categoryList =
         ref.watch(categoryListProvider);
 
-    _buildField(List<Category> categories) {
+    buildField(List<Category> categories) {
       return FormBuilderDropdown(
         name: 'category',
         decoration: const InputDecoration(
@@ -38,7 +38,7 @@ class ErrorIndicator extends HookConsumerWidget {
     }
 
     return categoryList.when(
-      data: (data) => _buildField(data),
+      data: (data) => buildField(data),
       error: (e, st) => ErrorIndicator(
         key: const Key('error_category_list'),
         error: e,
