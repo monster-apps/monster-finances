@@ -74,12 +74,17 @@ class TransactionPage extends HookConsumerWidget {
       FormBuilderDropdown(
         name: 'category',
         initialValue: transaction?.category.targetId,
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Category',
-          icon: Icon(null),
+          icon: const Icon(null),
+          hintText: 'Select category',
+          suffix: IconButton(
+            icon: const Icon(Icons.close),
+            onPressed: () {
+              _formKey.currentState!.fields['category']?.reset();
+            },
+          ),
         ),
-        allowClear: true,
-        hint: const Text('Select category'),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
         ]),

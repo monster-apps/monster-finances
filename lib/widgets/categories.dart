@@ -21,10 +21,9 @@ class ErrorIndicator extends HookConsumerWidget {
         name: 'category',
         decoration: const InputDecoration(
           labelText: 'Category',
+          hintText: 'Select category',
           icon: Icon(null),
         ),
-        allowClear: true,
-        hint: const Text('Select category'),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(),
         ]),
