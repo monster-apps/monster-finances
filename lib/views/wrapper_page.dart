@@ -35,17 +35,19 @@ class WrapperPage extends HookConsumerWidget {
       final bool isCreatingNewTransaction =
           ref.watch(isCreatingNewTransactionProvider);
 
-      return Row(
-        children: [
-          ...buildBox(const AccountsPage(), width: 280.0),
-          if (currentAccount != null)
-            ...buildBox(const AccountTransactionsPage(), width: 320.0),
-          Expanded(
-            child: currentTransaction != null || isCreatingNewTransaction
-                ? TransactionPage()
-                : const EmptyPage(),
-          ),
-        ],
+      return Scaffold(
+        body: Row(
+          children: [
+            ...buildBox(const AccountsPage(), width: 280.0),
+            if (currentAccount != null)
+              ...buildBox(const AccountTransactionsPage(), width: 320.0),
+            Expanded(
+              child: currentTransaction != null || isCreatingNewTransaction
+                  ? TransactionPage()
+                  : const EmptyPage(),
+            ),
+          ],
+        ),
       );
     }
 

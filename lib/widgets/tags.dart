@@ -50,10 +50,6 @@ class Tags extends HookConsumerWidget {
           labelText: "Tags",
           icon: Icon(null),
         ),
-        onChanged: (data) {
-          debugPrint('onChanged');
-          debugPrint(data.toString());
-        },
         addChip: (String enteredText) {
           Tag newObj = Tag(value: enteredText);
           ref.read(tagListNotifierProvider.notifier).add(ref, newObj);
