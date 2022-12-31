@@ -5,7 +5,6 @@ import 'package:monster_finances/data/database/entities/account.dart';
 import 'package:monster_finances/data/database/entities/account_responsible.dart';
 import 'package:monster_finances/data/database/entities/account_type.dart';
 import 'package:monster_finances/providers/account_list_provider.dart';
-import 'package:monster_finances/providers/account_type_list_provider.dart';
 import 'package:monster_finances/providers/current_account_provider.dart';
 import 'package:monster_finances/providers/last_account_type_selected_provider.dart';
 import 'package:monster_finances/providers/last_responsible_selected_provider.dart';
@@ -80,9 +79,6 @@ class AccountInfoPage extends HookConsumerWidget {
     final AsyncValue<AccountResponsible?> lastResponsibleSelected =
         ref.watch(lastResponsibleSelectedProvider);
 
-    final AsyncValue<List<AccountType>> accountTypeList =
-        ref.watch(accountTypeListProvider);
-
     mainBody() {
       return SingleChildScrollView(
         controller: ScrollController(),
@@ -133,8 +129,7 @@ class AccountInfoPage extends HookConsumerWidget {
               ref.read(accountListNotifierProvider.notifier).add(account);
               router.pop();
 
-              final ScaffoldMessengerState messenger =
-                  ScaffoldMessenger.of(context);
+              ScaffoldMessenger.of(context);
             }
           },
           label: const Text('Save'),
