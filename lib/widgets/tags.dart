@@ -21,7 +21,7 @@ class Tags extends HookConsumerWidget {
     final AsyncValue<List<Tag>> tagList = ref.watch(tagListProvider);
     final AsyncValue<List<Tag>> selectedTags = ref.watch(tagsSelectedProvider);
 
-    _deleteDialog() {
+    deleteDialog() {
       return AlertDialog(
         title: const Text('This tag is linked to other transactions'),
         content: const Text(
@@ -33,7 +33,7 @@ class Tags extends HookConsumerWidget {
           ),
           TextButton(
             style: TextButton.styleFrom(
-              primary: Colors.red,
+              foregroundColor: Colors.red,
             ),
             onPressed: () => Navigator.pop(context, deleteConfirmationKey),
             child: const Text('Delete'),
@@ -42,7 +42,7 @@ class Tags extends HookConsumerWidget {
       );
     }
 
-    _buildField(List<Tag> tagList) {
+    buildField(List<Tag> tagList) {
       return CustomChipsInput(
         name: 'tags',
         initialValue: tagList,
@@ -72,7 +72,7 @@ class Tags extends HookConsumerWidget {
               var shouldDelete = true;
               if (tag.transactions.isNotEmpty) {
                 final result = await showDialog(
-                    context: context, builder: (context) => _deleteDialog());
+                    context: context, builder: (context) => deleteDialog());
                 shouldDelete = result == deleteConfirmationKey;
               }
 
@@ -88,7 +88,7 @@ class Tags extends HookConsumerWidget {
     }
 
     return tagList.when(
-      data: (data) => _buildField(data),
+      data: (data) => buildField(data),
       error: (e, st) => ErrorIndicator(
         key: const Key('error_tag_list'),
         error: e,

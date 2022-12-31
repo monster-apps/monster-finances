@@ -127,7 +127,7 @@ class TransactionPage extends HookConsumerWidget {
             color: Colors.white,
           ),
           style: ElevatedButton.styleFrom(
-            primary: Colors.deepOrange,
+            backgroundColor: Colors.deepOrange,
           ),
           onPressed: () {
             ref
@@ -148,28 +148,26 @@ class TransactionPage extends HookConsumerWidget {
     mainBody(List<Category> categories) {
       return SingleChildScrollView(
         controller: ScrollController(),
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 64.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FormBuilder(
-                key: _formKey,
-                autovalidateMode: AutovalidateMode.disabled,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: _buildFormFields(
-                      context,
-                      categories,
-                      currentTransaction,
-                    ),
+        padding: const EdgeInsets.only(bottom: 64.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FormBuilder(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.disabled,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: _buildFormFields(
+                    context,
+                    categories,
+                    currentTransaction,
                   ),
                 ),
               ),
-              if (currentTransaction != null) deleteButton()
-            ],
-          ),
+            ),
+            if (currentTransaction != null) deleteButton()
+          ],
         ),
       );
     }
@@ -184,8 +182,7 @@ class TransactionPage extends HookConsumerWidget {
           heroTag: 'create-edit-transaction',
           onPressed: () async {
             debugPrint("save form");
-            _formKey.currentState!.save();
-            if (_formKey.currentState!.validate()) {
+            if (_formKey.currentState!.saveAndValidate()) {
               debugPrint(_formKey.currentState!.value.toString());
               final formValue = _formKey.currentState!.value;
               Transaction transaction = Transaction(

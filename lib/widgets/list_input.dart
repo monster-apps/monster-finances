@@ -8,7 +8,7 @@ class WidgetInput extends HookWidget {
     Key? key,
     this.icon,
     this.maxLines,
-    this.value,
+    this.initialValue,
     required this.title,
     required this.hint,
   }) : super(key: key);
@@ -17,25 +17,24 @@ class WidgetInput extends HookWidget {
   final String hint;
   final IconData? icon;
   final int? maxLines;
-  final String? value;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon),
-      title: FormBuilderTextField(
-        name: title,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: title,
-          alignLabelWithHint: true,
-          hintText: hint,
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-        ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.required(),
-        ]),
+    return FormBuilderTextField(
+      name: title,
+      maxLines: maxLines,
+      initialValue: initialValue,
+      decoration: InputDecoration(
+        labelText: title,
+        icon: Icon(icon),
+        alignLabelWithHint: true,
+        hintText: hint,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.required(),
+      ]),
     );
   }
 }
