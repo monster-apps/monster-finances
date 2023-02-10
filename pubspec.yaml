@@ -34,7 +34,7 @@ dependencies:
   grouped_list: ^5.1.2
   objectbox: ^1.7.0
   objectbox_flutter_libs: any
-  package_info_plus: ^1.4.3
+  package_info_plus: ^3.0.3
   flutter_hooks: ^0.18.5
   hooks_riverpod: ^2.0.0-dev.9
   intl: ^0.17.0
